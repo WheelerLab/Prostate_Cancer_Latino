@@ -1,0 +1,16 @@
+14_Phen_&_Geno_File_Formatting_For_GWAS/PrediX
+3/28/18
+
+#Original LA dbGaP phenotype file found at: /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c1.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.DS-CA-PUB_MDS.txt
+#Phenotype File downloaded, then formatted into R so the columns were spaced evenly (may have to use Excel/Sheets to format – I uploaded it to Google sheets then redownloaded it into R)
+Formatting done within RStudio:
+#Named File “dbGaP_For_LA”
+#Want to format phenotype file so only remaining columns (without their headers) are FID, IID, and status
+#Using the dplyr package, an FID column was created
+	df1 <- mutate(dbGaP_ForLA, FID = 0)
+#Then the 3 columns were written to “phen”, also using dplyr
+	Phen <- dplyr::select(df1, FID, geneva_id, status)
+#The columns were removed by writing a new table under the file name “JL.phen”
+write.table(phen, file = “JL.phen”, row.names = FALSE, col.names = FALSE, quote = FALSE)
+
+Files are now ready for GWAS with POP_filtered files
