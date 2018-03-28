@@ -1,0 +1,12 @@
+12_Redo_Michigan_IMP_LA&AA
+11/16/17
+
+#The problem at hand was for Imputation - files pruned for LD plots were used to further process QC rather than skip around this step for QC. 
+#To fix this, we have to go back to the step in QC before LD pruning and continue from there so that the uploaded Michigan files will have all the SNPs
+#I made a new directory called ImpREDO for the new steps to get from Step QC4 to Imputation
+
+#Copy the QC2 files used before LD pruning into the new directory
+jack@wheelerlab1:~$ cd px_prostate_cancer_LA/ImpREDO
+jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO$ cp /home/jack/px_prostate_cancer_LA/QC2* .
+
+#Jump from steps for QC2 to Liftover - using QC2 files to covert to hg19 (do not do QC3 onward)
