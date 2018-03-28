@@ -1,0 +1,732 @@
+2_GWASQC_AA
+
+#Start by making a new directory for the AA data called “px_prostate_cancer_AA”
+mkdir px_prostate_cancer_AA
+
+#For the sake of neatness, create on file called QC instead of multiple
+touch QC
+
+#Go to newly made directory to place files within it: cd px_cancer_data_AA
+#Copy files from Jack or Mohammed’s home directories:
+#Copy the .bed file: cp /home/jack/GENEVA_MEC_ProstateCancer_AA_all.bed .
+#Copy the .bim file: cp /home/jack/GENEVA_MEC_ProstateCancer_AA_all.bim .
+#Copy the .fam file: cp /home/jack/GENEVA_MEC_ProstateCancer_AA_all.fam .
+#Use ls to check and make sure the files were copied to the correct directory
+
+#QCStep1
+plink --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all -missing --out /home/jack/px_prostate_cancer_AA/QC
+
+#Record the data that follows, and make sure it matches previous data
+#Note any discrepancies or changes in data
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all
+  --missing
+  --out /home/jack/px_prostate_cancer_AA/QC
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1199187 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 64897 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC.hh ); many commands treat these as missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.935254.
+--missing: Sample missing data report written to
+/home/jack/px_prostate_cancer_AA/QC.imiss, and variant-based missing data
+report written to /home/jack/px_prostate_cancer_AA/QC.lmiss.
+
+#This created two files: .imiss (individual) and .lmiss (SNP/locus) that displays missing information in data
+#1,199,187 variants loaded from .bim file.
+#4,874 people (4,869 males, 5 females) loaded from .fam.
+#Why are there females in the dataset? Faulty data?
+#Total genotyping rate is 0.935254. So what does this mean?
+#1,199,187 variants and 4,874 people pass filters and QC.
+
+#QCStep2
+plink --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all --geno 0.1 --make-bed --out /home/jack/px_prostate_cancer_AA/QC2
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC2.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all
+  --geno 0.01
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC2
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1199187 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 64897 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC2.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.935254.
+114272 variants removed due to missing genotype data (--geno).
+1084915 variants and 4874 people pass filters and QC.
+Note: No phenotypes present.
+--make-bed to /home/jack/px_prostate_cancer_AA/QC2.bed +
+/home/jack/px_prostate_cancer_AA/QC2.bim +
+/home/jack/px_prostate_cancer_AA/QC2.fam ... done.
+
+#QCStep3
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --missing --out /home/jack/px_prostate_cancer_AA/QC3
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC3.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --missing
+  --out /home/jack/px_prostate_cancer_AA/QC3
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 48195 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC3.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999201.
+--missing: Sample missing data report written to
+/home/jack/px_prostate_cancer_AA/QC3.imiss, and variant-based missing data
+report written to /home/jack/px_prostate_cancer_AA/QC3.lmiss.
+
+#QCStep4
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --hardy --out /home/jack/px_prostate_cancer_AA/QC4
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC4.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --hardy
+  --out /home/jack/px_prostate_cancer_AA/QC4
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 48195 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC4.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999201.
+--hardy: Writing Hardy-Weinberg report (founders only) to
+/home/jack/px_prostate_cancer_AA/QC4.hwe ... done.
+#This generates a list of genotype counts and HW test stats for each SNP?
+    #Since this is founders only, any offspring are ignored
+
+#QCStep5a
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --indep-pairwise 50 5 0.3 --out /home/jack/px_prostate_cancer_AA/QC5a
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5a.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --indep-pairwise 50 5 0.3
+  --out /home/jack/px_prostate_cancer_AA/QC5a
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 48195 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5a.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999201.
+1084915 variants and 4874 people pass filters and QC.
+Note: No phenotypes present.
+Pruned 56599 variants from chromosome 1, leaving 33733.
+Pruned 55114 variants from chromosome 2, leaving 31557.
+Pruned 45221 variants from chromosome 3, leaving 26842.
+Pruned 37968 variants from chromosome 4, leaving 23907.
+Pruned 39594 variants from chromosome 5, leaving 24729.
+Pruned 43071 variants from chromosome 6, leaving 25300.
+Pruned 35337 variants from chromosome 7, leaving 21946.
+Pruned 33752 variants from chromosome 8, leaving 20939.
+Pruned 28411 variants from chromosome 9, leaving 18434.
+Pruned 33148 variants from chromosome 10, leaving 20581.
+Pruned 33644 variants from chromosome 11, leaving 19891.
+Pruned 32834 variants from chromosome 12, leaving 20118.
+Pruned 22409 variants from chromosome 13, leaving 14649.
+Pruned 21149 variants from chromosome 14, leaving 13538.
+Pruned 19148 variants from chromosome 15, leaving 13068.
+Pruned 20280 variants from chromosome 16, leaving 14087.
+Pruned 19685 variants from chromosome 17, leaving 13216.
+Pruned 17298 variants from chromosome 18, leaving 12170.
+Pruned 15105 variants from chromosome 19, leaving 10218.
+Pruned 15973 variants from chromosome 20, leaving 10938.
+Pruned 8007 variants from chromosome 21, leaving 6056.
+Pruned 9795 variants from chromosome 22, leaving 7141.
+Pruned 24279 variants from chromosome 23, leaving 12515.
+Pruned 838 variants from chromosome 24, leaving 150.
+Pruned 108 variants from chromosome 25, leaving 314.
+Pruned 37 variants from chromosome 26, leaving 74.
+Pruning complete.  668804 of 1084915 variants removed.
+Marker lists written to /home/jack/px_prostate_cancer_AA/QC5a.prune.in and
+/home/jack/px_prostate_cancer_AA/QC5a.prune.out .
+
+#QCStep5b
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 –extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in --genome --out /home/jack/px_prostate_cancer_AA/QC5b
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5b.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in
+  --genome
+  --out /home/jack/px_prostate_cancer_AA/QC5b
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+--extract: 416111 variants remaining.
+Using up to 11 threads (change this with --threads).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 16327 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5b.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999197.
+416111 variants and 4874 people pass filters and QC.
+Note: No phenotypes present.
+Excluding 12739 variants on non-autosomes from IBD calculation.
+IBD calculations complete.
+Finished writing /home/jack/px_prostate_cancer_AA/QC5b.genome .
+
+#QCStep5c
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --het --out /home/jack/px_prostate_cancer_AA/QC5c
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5c.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --het
+  --out /home/jack/px_prostate_cancer_AA/QC5c
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 48195 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5c.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999201.
+1084915 variants and 4874 people pass filters and QC.
+Note: No phenotypes present.
+--het: 1011185 variants scanned, report written to
+/home/jack/px_prostate_cancer_AA/QC5c.het .
+
+#Removal of one pair with PI_HAT > 0.05
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --rel-cutoff 0.05 --make-bed --out /home/jack/px_prostate_cancer_AA/QC5b1
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5b1.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC5b1
+  --rel-cutoff 0.05
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+Using up to 11 threads (change this with --threads).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 48195 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5b1.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999201.
+1084915 variants and 4874 people pass filters and QC (before --rel-cutoff).
+Note: No phenotypes present.
+Excluding 37893 variants on non-autosomes from relationship matrix calc.
+Relationship matrix calculation complete.
+586 people excluded by --rel-cutoff.
+Remaining sample IDs written to /home/jack/px_prostate_cancer_AA/QC5b1.rel.id .
+--make-bed to /home/jack/px_prostate_cancer_AA/QC5b1.bed +
+/home/jack/px_prostate_cancer_AA/QC5b1.bim +
+/home/jack/px_prostate_cancer_AA/QC5b1.fam ... done.
+#586 people excluded in new values of data
+#Now, 4288 people are unrelated
+
+#Current Listing of files
+jack@wheelerlab1:~/px_prostate_cancer_AA$ ls
+GENEVA_MEC_ProstateCancer_AA_all.bed  QC3.lmiss       QC5b1.bed     QC5c.hh
+GENEVA_MEC_ProstateCancer_AA_all.bim  QC3.log         QC5b1.bim     QC5c.log
+GENEVA_MEC_ProstateCancer_AA_all.fam  QC4.hh          QC5b1.fam     QC5d.log
+QC2.bed                               QC4.hwe         QC5b1.hh      QC5.log
+QC2.bim                               QC4.log         QC5b1.log     QC.hh
+QC2.fam                               QC51.log        QC5b1.rel.id  QC.imiss
+QC2.hh                                QC5a.hh         QC5b.genome   QC.lmiss
+QC2.log                               QC5a.log        QC5b.hh       QC.log
+QC3.hh                                QC5a.prune.in   QC5b.log
+QC3.imiss                             QC5a.prune.out  QC5c.het
+
+6/26/17
+
+#Removed QC5b1 and QC5c because now we're going to be using data where all related’s have been removed and making a histogram of that
+#ALSO the above --rel-cutoff command is WRONG because I was utilizing the SNPs and people before they had been pruned, but we want to use the data AFTER they've been pruned (pruning is Step 5a while we were using data from 2
+#So the below is the RIGHT command and then in the resulting PI_HAT histogram, we should see everything shift to the LEFT. This means that everyone is unrelated, confirmed, and that's what we want.
+#This next step will rewrite a QC5b1 file (which should have been removed with rm by now), but with the correct information
+
+
+#Step QC5b1 (redo)
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in --rel-cutoff 0.05 --make-bed --out /home/jack/px_prostate_cancer_AA/QC5b1
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5b1.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC5b1
+  --rel-cutoff 0.05
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+--extract: 416111 variants remaining.
+Using up to 11 threads (change this with --threads).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 16327 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5b1.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999197.
+416111 variants and 4874 people pass filters and QC (before --rel-cutoff).
+Note: No phenotypes present.
+Excluding 12739 variants on non-autosomes from relationship matrix calc.
+Relationship matrix calculation complete.
+533 people excluded by --rel-cutoff.
+Remaining sample IDs written to /home/jack/px_prostate_cancer_AA/QC5b1.rel.id .
+--make-bed to /home/jack/px_prostate_cancer_AA/QC5b1.bed +
+/home/jack/px_prostate_cancer_AA/QC5b1.bim +
+/home/jack/px_prostate_cancer_AA/QC5b1.fam ... done.
+#There are now 533 people removed rather than the original 586
+
+#QCStep5b2
+plink --bfile /home/jack/px_prostate_cancer_AA/QC5b1 --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in --genome --out /home/jack/px_prostate_cancer_AA/QC5b2
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5b2.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC5b1
+  --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in
+  --genome
+  --out /home/jack/px_prostate_cancer_AA/QC5b2
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+416111 variants loaded from .bim file.
+4341 people (4336 males, 5 females) loaded from .fam.
+--extract: 416111 variants remaining.
+Using up to 11 threads (change this with --threads).
+Before main variant filters, 4341 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 15900 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5b2.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999188.
+416111 variants and 4341 people pass filters and QC.
+Note: No phenotypes present.
+Excluding 12739 variants on non-autosomes from IBD calculation.
+IBD calculations complete.
+Finished writing /home/jack/px_prostate_cancer_AA/QC5b2.genome .
+#For plotting, remember to use QC5b2.genome
+
+
+#Running the rel-cutoff and genome command again because the previous plot had a few disparities that maybe were missed by the filter
+#--rel-cutoff is a heuristic (shortcut), that may explain why the disparities appeared scattered
+plink --bfile /home/jack/px_prostate_cancer_AA/QC2 --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in --rel-cutoff 0.05 --make-bed --out /home/jack/px_prostate_cancer_AA/QC5b1
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5b1.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC2
+  --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC5b1
+  --rel-cutoff 0.05
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1084915 variants loaded from .bim file.
+4874 people (4869 males, 5 females) loaded from .fam.
+--extract: 416111 variants remaining.
+Using up to 11 threads (change this with --threads).
+Before main variant filters, 4874 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 16327 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5b1.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999197.
+416111 variants and 4874 people pass filters and QC (before --rel-cutoff).
+Note: No phenotypes present.
+Excluding 12739 variants on non-autosomes from relationship matrix calc.
+Relationship matrix calculation complete.
+533 people excluded by --rel-cutoff.
+Remaining sample IDs written to /home/jack/px_prostate_cancer_AA/QC5b1.rel.id .
+--make-bed to /home/jack/px_prostate_cancer_AA/QC5b1.bed +
+/home/jack/px_prostate_cancer_AA/QC5b1.bim +
+/home/jack/px_prostate_cancer_AA/QC5b1.fam ... done.
+
+#QCStep5b2 (again)
+plink --bfile /home/jack/px_prostate_cancer_AA/QC5b1 --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in --genome --out /home/jack/px_prostate_cancer_AA/QC5b2
+
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC5b2.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC5b1
+  --extract /home/jack/px_prostate_cancer_AA/QC5a.prune.in
+  --genome
+  --out /home/jack/px_prostate_cancer_AA/QC5b2
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+416111 variants loaded from .bim file.
+4341 people (4336 males, 5 females) loaded from .fam.
+--extract: 416111 variants remaining.
+Using up to 11 threads (change this with --threads).
+Before main variant filters, 4341 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: 15900 het. haploid genotypes present (see
+/home/jack/px_prostate_cancer_AA/QC5b2.hh ); many commands treat these as
+missing.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.999188.
+416111 variants and 4341 people pass filters and QC.
+Note: No phenotypes present.
+Excluding 12739 variants on non-autosomes from IBD calculation.
+IBD calculations complete.
+Finished writing /home/jack/px_prostate_cancer_AA/QC5b2.genome .
+
+#Since the rel-cutoff histogram showed a few outliers above 0.05, we have to sort the genome file (QC5b2.genome) in descending order of the column "PI_HAT"
+#Command used: "sort -n -k10,10r QC5b2.genome"
+  #This sorts the file I want "QC5b2.genome", in descending order of the 10th column
+  #For other use, just switch out the 10s with any column number and insert filename at the end
+  #Caution: It starts sorting the file rapidly in terminal for a minute or 2
+  #So the file tells us that there are:
+
+0  232190907   0  232196413 OT     0  0.9500  0.0000  0.0500  0.0500  -1  0.787653  0.5289  2.0045
+
+7/17/17
+#Many of the remaining QC Steps are for removing duplicates and to plot until data is pruned. Since this dataset has been pruned with --rel-cutoff, we can skip the next steps in QC plotting.
+
+#Step5c repeat
+plink --bfile /home/jack/px_prostate_cancer_AA/QC5b1 --het --out plink --bfile /home/jack/px_prostate_cancer_AA/QC5c
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Error: Duplicate --bfile flag.
+
+#REPEATED
+plink –bfile /home/jack/px_prostate_cancer_AA/QC5b1 --het --out /home/jack/px_prostate_cancer_AA/QC5c
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+  (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+  Logging to /home/jack/px_prostate_cancer_AA/QC5c.log.
+  Options in effect:
+    --bfile /home/jack/px_prostate_cancer_AA/QC5b1
+    --het
+    --out /home/jack/px_prostate_cancer_AA/QC5c
+
+  64070 MB RAM detected; reserving 32035 MB for main workspace.
+  416111 variants loaded from .bim file.
+  4341 people (4336 males, 5 females) loaded from .fam.
+  Using 1 thread (no multithreaded calculations invoked).
+  Before main variant filters, 4341 founders and 0 nonfounders present.
+  Calculating allele frequencies... done.
+  Warning: 15900 het. haploid genotypes present (see
+  /home/jack/px_prostate_cancer_AA/QC5c.hh ); many commands treat these as
+  missing.
+  Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+  treat these as missing.
+  Total genotyping rate is 0.999188.
+  416111 variants and 4341 people pass filters and QC.
+  Note: No phenotypes present.
+  --het: 401110 variants scanned, report written to
+  /home/jack/px_prostate_cancer_AA/QC5c.het .
+
+  #Creates .het file of inbreeding coefficients for plotting
+  #ADD NOTES LATER
+#Going to make a new imiss file to include the data AFTER I took out relateds in 3_QC_PLOTS
+#This is to help make a new imiss plot in 3_QC_PLOTS_AA
+
+plink --bfile /home/jack/px_prostate_cancer_AA/QC5b1 --missing --out /home/jack/px_prostate_cancer_AA/QC5b3
+  PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+  (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+  Logging to /home/jack/px_prostate_cancer_AA/QC5b3.log.
+  Options in effect:
+    --bfile /home/jack/px_prostate_cancer_AA/QC5b1
+    --missing
+    --out /home/jack/px_prostate_cancer_AA/QC5b3
+
+  64070 MB RAM detected; reserving 32035 MB for main workspace.
+  416111 variants loaded from .bim file.
+  4341 people (4336 males, 5 females) loaded from .fam.
+  Using 1 thread (no multithreaded calculations invoked).
+  Before main variant filters, 4341 founders and 0 nonfounders present.
+  Calculating allele frequencies... done.
+  Warning: 15900 het. haploid genotypes present (see
+  /home/jack/px_prostate_cancer_AA/QC5b3.hh ); many commands treat these as
+  missing.
+  Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+  treat these as missing.
+  Total genotyping rate is 0.999188.
+  --missing: Sample missing data report written to
+  /home/jack/px_prostate_cancer_AA/QC5b3.imiss, and variant-based missing
+  data report written to /home/jack/px_prostate_cancer_AA/QC5b3.lmiss.
+
+7/19/17
+
+#LiftOver Python Commands
+
+#copy and past with nano the python code from: http://genome.sph.umich.edu/wiki/LiftMap.py 
+#set params['LIFTOVER_BIN'] = directory found by using the "which liftOver" command
+#set params['CHAIN'] = /home/wheelerlab1/Data/liftOver_files/hg18ToHg19.over.chain.gz
+
+#run in plink
+plink --bfile QC5b1 --recode --out /home/jack/px_prostate_cancer_AA/newfilename
+cp old LiftMap.py
+python LiftMap.py -h
+python LiftMap.py -m newfilename.map -p newfilename.ped -o LiftedFile
+plink --file LiftedFile --make-bed --out hg19
+
+
+#Step6a
+plink --bfile /home/jack/px_prostate_cancer_AA/hg19 --bmerge /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bed /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bim /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.fam --make-bed --out /home/jack/px_prostate_cancer_AA/QC6a
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC6a.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/hg19
+  --bmerge /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bed /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bim /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.fam
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC6a
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+4341 people loaded from /home/jack/px_prostate_cancer_AA/hg19.fam.
+391 people to be merged from
+/home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.fam.
+Of these, 391 are new, while 0 are present in the base dataset.
+Warning: Multiple positions seen for variant 'rs11573979'.
+Warning: Multiple positions seen for variant 'rs11573986'.
+Warning: Multiple positions seen for variant 'rs11573991'.
+402984 markers loaded from /home/jack/px_prostate_cancer_AA/hg19.bim.
+1447224 markers to be merged from
+/home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig.bim.
+Of these, 1074872 are new, while 372352 are present in the base dataset.
+106 more multiple-position warnings: see log file.
+Error: 62555 variants with 3+ alleles present.
+* If you believe this is due to strand inconsistency, try --flip with
+  /home/jack/px_prostate_cancer_AA/QC6a-merge.missnp.
+  (Warning: if this seems to work, strand errors involving SNPs with A/T or C/G
+  alleles probably remain in your data.  If LD between nearby SNPs is high,
+  --flip-scan should detect them.)
+* If you are dealing with genuine multiallelic variants, we recommend exporting
+  that subset of the data to VCF (via e.g. '--recode vcf'), merging with
+  another tool/script, and then importing the result; PLINK is not yet suited
+  to handling them.
+
+#Multiple position warnings different from Mohammed’s. Probably caused by difference in Liftover commands (python vs. perl)
+
+#Step6b
+plink --bfile /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig --exclude /home/jack/px_prostate_cancer_AA/QC6a-merge.missnp --make-bed --out /home/jack/px_prostate_cancer_AA/QC6b
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC6b.log.
+Options in effect:
+  --bfile /home/wheelerlab1/Data/HAPMAP3_hg19/HM3_ASN_CEU_YRI_Unrelated_hg19_noAmbig
+  --exclude /home/jack/px_prostate_cancer_AA/QC6a-merge.missnp
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC6b
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1447224 variants loaded from .bim file.
+391 people (197 males, 194 females) loaded from .fam.
+391 phenotype values loaded from .fam.
+--exclude: 1384669 variants remaining.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 391 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.852537.
+1384669 variants and 391 people pass filters and QC.
+Among remaining phenotypes, 0 are cases and 391 are controls.
+--make-bed to /home/jack/px_prostate_cancer_AA/QC6b.bed +
+/home/jack/px_prostate_cancer_AA/QC6b.bim +
+/home/jack/px_prostate_cancer_AA/QC6b.fam ... done.
+
+#Step6c
+plink --bfile /home/jack/px_prostate_cancer_AA/hg19 --bmerge /home/jack/px_prostate_cancer_AA/QC6b.bed /home/jack/px_prostate_cancer_AA/QC6b.bim /home/jack/px_prostate_cancer_AA/QC6b.fam --make-bed --out /home/jack/px_prostate_cancer_AA/QC6c
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC6c.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/hg19
+  --bmerge /home/jack/px_prostate_cancer_AA/QC6b.bed /home/jack/px_prostate_cancer_AA/QC6b.bim /home/jack/px_prostate_cancer_AA/QC6b.fam
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QC6c
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+4341 people loaded from /home/jack/px_prostate_cancer_AA/hg19.fam.
+391 people to be merged from /home/jack/px_prostate_cancer_AA/QC6b.fam.
+Of these, 391 are new, while 0 are present in the base dataset.
+Warning: Multiple positions seen for variant 'rs6679294'.
+Warning: Multiple positions seen for variant 'rs17378839'.
+Warning: Multiple positions seen for variant 'rs35801763'.
+402984 markers loaded from /home/jack/px_prostate_cancer_AA/hg19.bim.
+1384669 markers to be merged from /home/jack/px_prostate_cancer_AA/QC6b.bim.
+Of these, 1074872 are new, while 309797 are present in the base dataset.
+86 more multiple-position warnings: see log file.
+Warning: Variants 'rs1921' and 'GA018364' have the same position.
+Warning: Variants 'rs2465136' and 'GA018373' have the same position.
+Warning: Variants 'rs7555212' and 'AFFX-SNP_6564577__rs7555212' have the same
+position.
+2543 more same-position warnings: see log file.
+Performing single-pass merge (4732 people, 1477856 variants).
+Merged fileset written to /home/jack/px_prostate_cancer_AA/QC6c-merge.bed +
+/home/jack/px_prostate_cancer_AA/QC6c-merge.bim +
+/home/jack/px_prostate_cancer_AA/QC6c-merge.fam .
+1477856 variants loaded from .bim file.
+4732 people (4533 males, 199 females) loaded from .fam.
+391 phenotype values loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4732 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.315951.
+1477856 variants and 4732 people pass filters and QC.
+Among remaining phenotypes, 0 are cases and 391 are controls.  (4341 phenotypes
+are missing.)
+--make-bed to /home/jack/px_prostate_cancer_AA/QC6c.bed +
+/home/jack/px_prostate_cancer_AA/QC6c.bim +
+/home/jack/px_prostate_cancer_AA/QC6c.fam ... done.
+
+#Step6d (corrected and repeated versions)
+plink --bfile /home/jack/px_prostate_cancer_AA/QC6c --geno 0.05 --maf 0.05 --make-bed --out /home/jack/px_prostate_cancer_AA/QCd1
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QCd1.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC6c
+  --geno 0.05
+  --maf 0.05
+  --make-bed
+  --out /home/jack/px_prostate_cancer_AA/QCd1
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+1477856 variants loaded from .bim file.
+4732 people (4533 males, 199 females) loaded from .fam.
+391 phenotype values loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4732 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.315951.
+1211309 variants removed due to missing genotype data (--geno).
+35718 variants removed due to minor allele threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+230829 variants and 4732 people pass filters and QC.
+Among remaining phenotypes, 0 are cases and 391 are controls.  (4341 phenotypes
+are missing.)
+--make-bed to /home/jack/px_prostate_cancer_AA/QCd1.bed +
+/home/jack/px_prostate_cancer_AA/QCd1.bim +
+/home/jack/px_prostate_cancer_AA/QCd1.fam ... done.
+
+#Step6e
+plink --bfile /home/jack/px_prostate_cancer_AA/QC6d1 --indep-pairwise 50 5 0.3 --recode --out /home/jack/px_prostate_cancer_AA/QC6e1
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/px_prostate_cancer_AA/QC6e1.log.
+Options in effect:
+  --bfile /home/jack/px_prostate_cancer_AA/QC6d1
+  --indep-pairwise 50 5 0.3
+  --out /home/jack/px_prostate_cancer_AA/QC6e1
+  --recode
+
+64070 MB RAM detected; reserving 32035 MB for main workspace.
+195233 variants loaded from .bim file.
+4732 people (4533 males, 199 females) loaded from .fam.
+391 phenotype values loaded from .fam.
+Using 1 thread (no multithreaded calculations invoked).
+Before main variant filters, 4732 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.99919.
+195233 variants and 4732 people pass filters and QC.
+Among remaining phenotypes, 0 are cases and 391 are controls.  (4341 phenotypes
+are missing.)
+--recode ped to /home/jack/px_prostate_cancer_AA/QC6e1.ped +
+/home/jack/px_prostate_cancer_AA/QC6e1.map ... done.
+Pruned 282 variants from chromosome 1, leaving 14499.
+Pruned 246 variants from chromosome 2, leaving 14962.
+Pruned 270 variants from chromosome 3, leaving 12724.
+Pruned 177 variants from chromosome 4, leaving 11917.
+Pruned 176 variants from chromosome 5, leaving 11046.
+Pruned 232 variants from chromosome 6, leaving 11756.
+Pruned 188 variants from chromosome 7, leaving 10731.
+Pruned 156 variants from chromosome 8, leaving 10194.
+Pruned 132 variants from chromosome 9, leaving 9228.
+Pruned 174 variants from chromosome 10, leaving 10085.
+Pruned 163 variants from chromosome 11, leaving 8875.
+Pruned 154 variants from chromosome 12, leaving 9149.
+Pruned 101 variants from chromosome 13, leaving 7439.
+Pruned 106 variants from chromosome 14, leaving 6524.
+Pruned 116 variants from chromosome 15, leaving 6604.
+Pruned 104 variants from chromosome 16, leaving 6894.
+Pruned 93 variants from chromosome 17, leaving 5946.
+Pruned 76 variants from chromosome 18, leaving 6120.
+Pruned 42 variants from chromosome 19, leaving 4397.
+Pruned 96 variants from chromosome 20, leaving 5843.
+Pruned 49 variants from chromosome 21, leaving 3380.
+Pruned 79 variants from chromosome 22, leaving 3708.
+Pruning complete.  3212 of 195233 variants removed.
+Marker lists written to /home/jack/px_prostate_cancer_AA/QC6e1.prune.in and
+/home/jack/px_prostate_cancer_AA/QC6e1.prune.out .
+
+#Step6f
+awk '{print $1,$2,$3,$4,$5,1}' /home/jack/px_prostate_cancer_AA/QC6d1.fam > /home/jack/px_prostate_cancer_AA/QC6e1.fam
+
+#Step 6g REPEAT 
+perl /home/wheelerlab1/Data/GWAS_QC_scripts/make_par_file.pl /home/jack/px_prostate_cancer_AA/QC6e1 0 > /home/jack/px_prostate_cancer_AA/QC6f1.par
+
+#Step 6h REPEAT
+smartpca -p /home/jack/px_prostate_cancer_AA/QC6f1.par #Took 14 minutes to complete
