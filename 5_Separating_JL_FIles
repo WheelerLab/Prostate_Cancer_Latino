@@ -1,0 +1,124 @@
+7/25/17
+5_Separating_JL_Files
+
+#We have to separate the Japanese and Latino cohorts from their combined file
+#Use the “less-S” command on the combined file, then create bed, bim, fam files and separate the two cohorts
+   
+awk '$10 == L' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c1.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.DS-CA-PUB-MDS.txt > /home/jack/JA_pheno.txt
+
+#Next we must combine 3 phenotype files into different files
+
+sed -n -e '12,1066p' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c1.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.DS-CA-PUB-MDS.txt > /home/jack/test
+sed -n -e '12,1725p' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt > /home/jack/test1
+sed -n -e '12,1711p' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt > /home/jack/test2
+
+cat test test1 test2 >> test3
+	#IMPORTANT: The individual file types should add up to 4469 lines
+
+#Now make two new directories where the Japanese and Latino cohort information will be placed
+
+mkdir px_prostate_cancer_JA
+mkdir px_prostate_cancer_LA
+
+#Take data from test3 (the combined files) and turn them into columns – there should be 20
+column -t test3 > test4
+awk '{print NF}' test4 | sort -nu | tail -n 1
+
+awk '{print > $4".txt"}' test4
+#This makes 2 files, J.txt and L.txt, in which J.txt has all rows with J in column 4
+#We have 2263 Japanese and 2206 Latino people in our cohort
+
+#Now move the J.txt and L.txt files into their respective directories
+mv /home/jack/J.txt /home/jack/px_prostate_cancer_JA/
+mv /home/jack/L.txt /home/jack/px_prostate_cancer_LA/
+
+#Now we have to make the files into bed/bim/fam files. 
+#Problem is that the rows in L.txt and J.txt have different number of columns, so copy the first 4 columns (important ones) to another file. 
+awk '{print $1,$2,$3,$4}' L.txt > LA.txt
+awk '{print $1,$2,$3,$4}' J.txt > JA.txt
+    #So the 2 new files have the important first 4 columns from the original 2 files. 
+    
+#In Rstudio now
+#For latino pop
+install.packages("dplyr")
+library(dplyr)
+data <- read.table("/home/jack/px_prostate_cancer_LA/LA.txt")
+latino <- filter(data, V4 == "L")
+latino_plink <- select(latino, V2)
+latino_plink <- mutate (latino_plink, FID=0)
+latino_final <- select(latino_plink, FID, V2)
+write.table(latino_final, file = "latino.list.txt", quote = F, row.names = F, col.names = F)
+#If using a different directory than your home, such as a Z drive directory, make sure that is specified within “latino.list.txt”
+#For example, mine had to be file = “Z:/latino.list.txt”
+
+#For Japanese pop
+datainstall.packages("dplyr")
+library(dplyr)
+data1 <- read.table("/home/jack/px_prostate_cancer_JA/JA.txt")
+japanese <- filter(data1, V4 == "J")
+japense_plink <- select(japanese, V2)
+japense_plink <- mutate(japense_plink, FID = 0)
+japense_final <- select(japense_plink, FID, V2)
+write.table(japense_final, file = "japanese.list.txt", quote = F, row.names = F, col.names = F)
+	#Same idea applies where the directory needs to be correct
+
+#In terminal
+#Plink to make the bed/bim/fam files
+
+#Makes the initial data into the format for the Latino cohort
+plink --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all --keep latino.list.txt --make-bed --out /home/jack/px_prostate_cancer_LA/LA_list
+     PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+    (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+    Logging to /home/jack/px_prostate_cancer_LA/LA_list.log.
+    Options in effect:
+      --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+      --keep latino.list.txt
+      --make-bed
+      --out /home/jack/px_prostate_cancer_LA/LA_list
+
+    64070 MB RAM detected; reserving 32035 MB for main workspace.
+    657366 variants loaded from .bim file.
+    4353 people (4346 males, 7 females) loaded from .fam.
+    --keep: 2081 people remaining.
+    Using 1 thread (no multithreaded calculations invoked).
+    Before main variant filters, 2081 founders and 0 nonfounders present.
+    Calculating allele frequencies... done.
+    Warning: 7878 het. haploid genotypes present (see
+    /home/jack/px_prostate_cancer_LA/LA_list.hh ); many commands treat these as
+    missing.
+    Total genotyping rate in remaining samples is 0.827934.
+    657366 variants and 2081 people pass filters and QC.
+    Note: No phenotypes present.
+    --make-bed to /home/jack/px_prostate_cancer_LA/LA_list.bed +
+    /home/jack/px_prostate_cancer_LA/LA_list.bim +
+    /home/jack/px_prostate_cancer_LA/LA_list.fam ... done.
+    
+#For Japanese 
+plink --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all --keep japanese.list.txt --make-bed --out /home/jack/px_prostate_cancer_JA/JA_list
+    PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+    (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+    Logging to /home/jack/px_prostate_cancer_JA/JA_list.log.
+    Options in effect:
+      --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+      --keep japanese.list.txt
+      --make-bed
+      --out /home/jack/px_prostate_cancer_JA/JA_list
+
+    64070 MB RAM detected; reserving 32035 MB for main workspace.
+    657366 variants loaded from .bim file.
+    4353 people (4346 males, 7 females) loaded from .fam.
+    --keep: 1934 people remaining.
+    Using 1 thread (no multithreaded calculations invoked).
+    Before main variant filters, 1934 founders and 0 nonfounders present.
+    Calculating allele frequencies... done.
+    Warning: 3357 het. haploid genotypes present (see
+    /home/jack/px_prostate_cancer_JA/JA_list.hh ); many commands treat these as
+    missing.
+    Total genotyping rate in remaining samples is 0.828028.
+    657366 variants and 1934 people pass filters and QC.
+    Note: No phenotypes present.
+    --make-bed to /home/jack/px_prostate_cancer_JA/JA_list.bed +
+    /home/jack/px_prostate_cancer_JA/JA_list.bim +
+    /home/jack/px_prostate_cancer_JA/JA_list.fam ... done.
+
+#End separating files
