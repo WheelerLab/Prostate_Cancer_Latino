@@ -1,0 +1,63 @@
+13_UMich_Python_Script_&_Plink_MAF_r2
+2/2/18
+
+#Make sure you keep track of how many SNPs are in the current dosages files – you will need to keep track of how many are filtered out once the Python script is run
+#Path to Lauren’s python script. Copy to directory where Imputed dosage.vcf.gz files are.
+/home/lauren/UMich_vcf2px.py
+
+#Running the UMich Python Script:
+#Using a simple bash command with 22 lines of input doesn’t seem to work.
+#Create for loop bash command to run the Python script for each chromosome.
+nano for_Loop_bash
+
+#Within the command, change the directory for imputed files:
+	for ((j = 1 ; j <= 22; j++))
+	do
+		python UMich_vcf2px.py -i /home/jack/px_prostate_cancer/ImpREDO/Imputed_files/ -c ${j} -r 1000g 
+
+#-r may be cappa depending on the population
+#-m defaults MAF to .01 – this can be deleted if .01 is wanted
+#-r2 defaults to .08 – this can be deleted if .08 is wanted
+
+#Run a nohup bash command to have the script work in the background.
+#Check to make sure chr1 (or whichever is first) is within the new UMich_dosages directory, and it should be going.
+	nohup bash for_Loop_bash &
+
+2/8/18
+#Once I had one chromosome to test, I tried converting it to a bed file.
+#Converts dosage txt.gz file to .bed
+	zcat file.txt.gz | sed 's/:/\t/g' | sed 's/-/\t/g' > file.bed
+#Above step incorrect, file formed from this command was deleted
+#I need to use vcftools to filter .dose.vcf.gz files downloaded from Michigan Imputation by MAF of .01 and r^2 of 0.8
+#vcftools.sourceforge.net has good vcftools commands for allele implementations
+
+2/15/18
+#Could not find how to filter MAF and r^2 with vcftools, so converted to plink and then I will filter
+#To filter by MAF 0.01:
+plink --bfile chr_# --maf 0.01 –-make-bed –-out chr_#
+#***Note***: If the same filename is used for the out file in this step, the unfiltered input file will now have a ~ at the end of it. Delete the input files, keep the new ones.
+
+#To filter by r^2 0.8:
+plink --bfile chr_# --r2 0.8 –-make-bed –-out chr_#
+#Error invalid --r/--r2 parameter ‘0.8’ 
+#Lauren sent: --qual-threshold 0.8 to use, might be better suited for 
+
+2/16/18
+#Found Ally’s old post Imputation filtering and conversion. Steps 2 and 4 (disregard HW equilibrium part) will be used for MAF and r^2 filtering: https://github.com/abadalamenti1/Population_Expression_Prediction/blob/ef5160cbe7e1c5bdb613acf48b30dbba0ca4bcb7/B)_Steps_After_Imputation 
+#2) Obtain the imputation output files using the emailed encription key, and remove SNPs with R2 < 0.8. Make sure these files are gzipped.
+nano R^2_Ally’s Format:
+‘for i in {1..22}; 
+do bcftools filter -i 'R2>0.8' chr${i}.dose.vcf.gz > POP_chr${i}.R20.8.dose.vcf; 
+done’
+
+#4) QC on merged files using vcftools, keeping only SNPs with MAF > 0.01
+'for i in {1..22};
+do vcftools --gzvcf POP_merge_chr${i}.R20.8.dose.vcf.gz --maf 0.01 --recode --out POP_filtered_chr${i}; 
+done'
+#Output for each chromosome: POP_filtered_chr#.recode.vcf
+
+#To convert to bed bim fam format:
+plink –-vcf POP_filtered_chr#.recode.vcf –out POP_filtered_chr#
+#Output for each chromosome: POP_filtered_chr#.bed
+#Output for each chromosome: POP_filtered_chr#.bim
+#Output for each chromosome: POP_filtered_chr#.fam
