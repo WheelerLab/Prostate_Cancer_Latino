@@ -1,0 +1,81 @@
+#Prepared POP_filtered files are ready for GWAS
+  #POP_filtered files are in plink format
+  #Phenotype files have no headers, so should be properly formatted
+  
+  #Following steps/files found in /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run
+  
+  #Testing Chromosome 21 Genotype file first:
+  
+  plink --bfile POP_filtered_chr21 --maf 0.05 --linear --adjust --pheno JL.phen --pheno-name JL.phen --out GWAS_JL.phen
+  Error: --pheno-name requires the --pheno file to have a header line with first two columns 'FID' and 'IID'
+  #Add FID and IID headers
+  #For the third column header, name ProCan - this will be your pheno-name
+  
+  echo -e "FID IID ProCan " | cat - JL.phen > JL.phen.header
+  #Added 'FID IID ProCan' headers
+  
+  less -S JL.phen.header
+      FID IID ProCan 
+      0 231000471 1
+      0 231000883 2
+      0 231000905 1
+      0 231001018 2
+      0 231001106 1
+      0 231001247 1
+      0 231001329 1
+      0 231001664 2
+      0 231001903 1
+      0 231002008 2
+      0 231002186 1
+      0 231002191 1
+      0 231002243 2
+
+  
+  plink --bfile POP_filtered_chr21 --maf 0.05 --linear --adjust --pheno JL.phen.header --pheno-name ProCan  --out GWAS_JL.phen
+  Error: --linear without --all-pheno requires a scalar phenotype.
+  #What does this mean...
+  #It has to be logistic, not linear
+  #Also we don't need the --maf flag because the genotype files are already filtered to .01
+  
+  plink --bfile POP_filtered_chr21 --logistic --adjust --pheno JL.phen.header --pheno-name ProCan  --out GWAS_JL.phen
+      PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+      (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+      Logging to GWAS_JL.phen.log.
+      Options in effect:
+        --adjust
+        --bfile POP_filtered_chr21
+        --logistic
+        --out GWAS_JL.phen
+        --pheno JL.phen.header
+        --pheno-name ProCan
+
+      64070 MB RAM detected; reserving 32035 MB for main workspace.
+      76965 variants loaded from .bim file.
+      2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+      Ambiguous sex IDs written to GWAS_JL.phen.nosex .
+      854 phenotype values present after --pheno.       
+      Warning: Ignoring phenotypes of missing-sex samples.  If you don't want those
+      phenotypes to be ignored, use the --allow-no-sex flag.  
+      Using 1 thread (no multithreaded calculations invoked).
+      Before main variant filters, 2081 founders and 0 nonfounders present.
+      Calculating allele frequencies... done.
+      76965 variants and 2081 people pass filters and QC.
+      Note: No phenotypes present.
+      Warning: Skipping --logistic since less than two phenotypes are present.
+  #Logistic didn't seem to work...
+  #There are only 854 phenotypes accounted for...we should have 2081 - go find the other phenotype files and merge them
+  #We only have men, so the missing-sex samples is ignored
+  #Use the --allow-no-sex flag after you go get the rest of the phenotypes from the gbGaP files like in 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
+  
+  #2 missing phenotype files are in /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579
+  #Previously we took the phs000306.v4.pht001911.v1.p1.c1.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.DS-CA-PUB-MDS.txt file
+  #Now we need the next 2:
+    phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt
+    phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt
+    
+  cp phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt /home/jack
+  cp phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt /home/jack
+  
+  #NOTE: Now that we have the files, we need to format and merge them again...see 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
+
+  
