@@ -14,3 +14,9 @@ Formatting done within RStudio:
 write.table(phen, file = “JL.phen”, row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 Files are now ready for GWAS with POP_filtered files
+
+
+
+#NOTE: As stated in the 15_GWAS Repo, the following was done after realizing there were 2 missing dbGap files needed for GWAS
+#Now that we have them, they need to be formatted in RStudio similar to the previous dbGaP file
+
