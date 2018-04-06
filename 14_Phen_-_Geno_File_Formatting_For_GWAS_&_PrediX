@@ -20,3 +20,11 @@ Files are now ready for GWAS with POP_filtered files
 #NOTE: As stated in the 15_GWAS Repo, the following was done after realizing there were 2 missing dbGap files needed for GWAS
 #Now that we have them, they need to be formatted in RStudio similar to the previous dbGaP file
 
+#Mutate to add an FID column at the end of these plots
+> df2 <- mutate(dbGaP_For_LA_c2, FID = 0)
+> df5 <- mutate(dbGaP_For_LA_c5, FID = 0)
+
+#Formatted so only 'FID IID status' remain
+> Phen2 <- dplyr::select(df2, FID, geneva_id, status)
+> Phen5 <- dplyr::select(df5, FID, geneva_id, status)
+
