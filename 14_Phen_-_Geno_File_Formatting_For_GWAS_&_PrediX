@@ -33,6 +33,7 @@ Formatting done within RStudio:
 	> DF1 <- dplyr::filter(df1, ethni == "L")
 	> DF2 <- dplyr::filter(df2, ethni == "L")
 	> DF5 <- dplyr::filter(df5, ethni == "L")
+	#Only rows with Latino Phenotype data remains
 	#Renamed the filtered files (without Japanese phenotypes) DF1, DF2, DF5
 	
 #Now repeat the above steps to format them into files
@@ -40,5 +41,15 @@ Formatting done within RStudio:
 	> Phen2 <- dplyr::select(DF2, FID, geneva_id, status)
 	> Phen5 <- dplyr::select(DF5, FID, geneva_id, status)
 	
+#Now I need to combine all 3 Phenotype files into one...dplyr bind_rows or dplyr intersect?
+	#There are 2081 people, but when combining all observations of the phenotype files there are 2206...
+	#Regardless, used R-bind to concatinate them together and wrote it to PhenTemp
 	
+	> PhenTemp <- rbind(Phen1, Phen2, Phen5)
+	
+#Wrote the new table to PhenTemp
+	> write.table(PhenTemp, file = "PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
+	#Where is the file tho???
+	
+
 	
