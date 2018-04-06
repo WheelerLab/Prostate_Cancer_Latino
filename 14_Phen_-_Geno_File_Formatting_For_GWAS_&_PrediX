@@ -28,3 +28,4 @@ Files are now ready for GWAS with POP_filtered files
 > Phen2 <- dplyr::select(df2, FID, geneva_id, status)
 > Phen5 <- dplyr::select(df5, FID, geneva_id, status)
 
+#Still need to figure out how to separate the Japanese from these files
