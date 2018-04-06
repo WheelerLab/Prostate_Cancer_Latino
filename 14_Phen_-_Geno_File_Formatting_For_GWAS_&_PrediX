@@ -11,9 +11,9 @@ Formatting done within RStudio:
 #Then the 3 columns were written to “phen”, also using dplyr
 	Phen <- dplyr::select(df1, FID, geneva_id, status)
 #The columns were removed by writing a new table under the file name “JL.phen”
-write.table(phen, file = “JL.phen”, row.names = FALSE, col.names = FALSE, quote = FALSE)
+	write.table(phen, file = “JL.phen”, row.names = FALSE, col.names = FALSE, quote = FALSE)
 
-Files are now ready for GWAS with POP_filtered files
+#Files are now ready for GWAS with POP_filtered files
 
 
 
@@ -21,11 +21,24 @@ Files are now ready for GWAS with POP_filtered files
 #Now that we have them, they need to be formatted in RStudio similar to the previous dbGaP file
 
 #Mutate to add an FID column at the end of these plots
-> df2 <- mutate(dbGaP_For_LA_c2, FID = 0)
-> df5 <- mutate(dbGaP_For_LA_c5, FID = 0)
+	> df2 <- mutate(dbGaP_For_LA_c2, FID = 0)
+	> df5 <- mutate(dbGaP_For_LA_c5, FID = 0)
 
 #Formatted so only 'FID IID status' remain
-> Phen2 <- dplyr::select(df2, FID, geneva_id, status)
-> Phen5 <- dplyr::select(df5, FID, geneva_id, status)
+	> Phen2 <- dplyr::select(df2, FID, geneva_id, status)
+	> Phen5 <- dplyr::select(df5, FID, geneva_id, status)
 
 #Still need to figure out how to separate the Japanese from these files
+#Use dplyr on the df tables:
+	> DF1 <- dplyr::filter(df1, ethni == "L")
+	> DF2 <- dplyr::filter(df2, ethni == "L")
+	> DF5 <- dplyr::filter(df5, ethni == "L")
+	#Renamed the filtered files (without Japanese phenotypes) DF1, DF2, DF5
+	
+#Now repeat the above steps to format them into files
+	> Phen1 <- dplyr::select(DF1, FID, geneva_id, status)
+	> Phen2 <- dplyr::select(DF2, FID, geneva_id, status)
+	> Phen5 <- dplyr::select(DF5, FID, geneva_id, status)
+	
+	
+	
