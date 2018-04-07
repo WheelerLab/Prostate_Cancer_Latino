@@ -73,9 +73,672 @@
     phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt
     phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt
     
-  cp phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt /home/jack
-  cp phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt /home/jack
+    cp phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt /home/jack
+    cp phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt /home/jack
+    #NOTE: Now that we have the files, we need to format and merge them again...see 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
   
-  #NOTE: Now that we have the files, we need to format and merge them again...see 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
+  #2 Phenotype files found and merged in 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
+  #File written as 'PhenTem' - we need to add column heads to it
+  
+    echo -e "FID IID ProCan " | cat - PhenTemp > PhenTemp.header
+    
+  #Now we can finally start the GWAS - remember to specify the --allow-no-sex flag after the --pheno flag!
+  
+    plink --bfile POP_filtered_chr21 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS_JL.phen
+        PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+        (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+        Logging to GWAS_JL.phen.log.
+        Options in effect:
+          --adjust
+          --allow-no-sex
+          --bfile POP_filtered_chr21
+          --logistic
+          --out GWAS_JL.phen
+          --pheno PhenTemp.header
+          --pheno-name ProCan
 
-  
+        64070 MB RAM detected; reserving 32035 MB for main workspace.
+        76965 variants loaded from .bim file.
+        2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+        Ambiguous sex IDs written to GWAS_JL.phen.nosex .
+        2081 phenotype values present after --pheno.
+        Using 1 thread (no multithreaded calculations invoked).
+        Before main variant filters, 2081 founders and 0 nonfounders present.
+        Calculating allele frequencies... done.
+        76965 variants and 2081 people pass filters and QC.
+        Among remaining phenotypes, 1050 are cases and 1031 are controls.
+        Writing logistic model association results to GWAS_JL.phen.assoc.logistic ...
+        done.
+        --adjust: Genomic inflation est. lambda (based on median chisq) = 1.
+        --adjust values (76965 variants) written to
+        GWAS_JL.phen.assoc.logistic.adjusted .
+        
+    #3 new files written: GWAS_JL.phen.assoc.logistic, GWAS_JL.phen.assoc.logistic.adjusted, GWAS_JL.phen.log
+    
+    #So this works for chr21, now let's create a bash that can run all of the genotype files and format them with these phenotype files
+    #nano made to later use bash on. Named: bash_for_linear_files_allchr
+    #Now we need to get all the filtered files into this directory
+    
+      mv POP_filtered_chr* /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run/
+
+    #Now let's implement the bash and hopefully it will output 22 copies of the 3 kinds of files
+    
+      nano bash_for_linear_files_allchr:
+          plink --bfile POP_filtered_chr1 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.1
+          plink --bfile POP_filtered_chr2 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.2
+          plink --bfile POP_filtered_chr3 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.3
+          plink --bfile POP_filtered_chr4 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.4
+          plink --bfile POP_filtered_chr5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.5
+          plink --bfile POP_filtered_chr6 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.6
+          plink --bfile POP_filtered_chr7 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.7
+          plink --bfile POP_filtered_chr8 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.8
+          plink --bfile POP_filtered_chr9 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.9
+          plink --bfile POP_filtered_chr10 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.10
+          plink --bfile POP_filtered_chr11 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.11
+          plink --bfile POP_filtered_chr12 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.12
+          plink --bfile POP_filtered_chr13 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.13
+          plink --bfile POP_filtered_chr14 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.14
+          plink --bfile POP_filtered_chr15 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.15
+          plink --bfile POP_filtered_chr16 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.16
+          plink --bfile POP_filtered_chr17 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.17
+          plink --bfile POP_filtered_chr18 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.18
+          plink --bfile POP_filtered_chr19 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.19
+          plink --bfile POP_filtered_chr20 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.20
+          plink --bfile POP_filtered_chr21 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.21
+          plink --bfile POP_filtered_chr22 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.22
+        
+      bash bash_for_linear_files_allchr
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.1.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr1
+            --logistic
+            --out GWAS.phen.1
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          455259 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.1.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          455259 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.1.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.07278.
+          --adjust values (455259 variants) written to
+          GWAS.phen.1.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.2.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr2
+            --logistic
+            --out GWAS.phen.2
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          524681 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.2.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          524681 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.2.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.03568.
+          --adjust values (524681 variants) written to
+          GWAS.phen.2.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.3.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr3
+            --logistic
+            --out GWAS.phen.3
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          456600 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.3.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          456600 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.3.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.
+          --adjust values (456600 variants) written to
+          GWAS.phen.3.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.4.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr4
+            --logistic
+            --out GWAS.phen.4
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          452329 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.4.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          452329 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.4.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.02167.
+          --adjust values (452329 variants) written to
+          GWAS.phen.4.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.5.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr5
+            --logistic
+            --out GWAS.phen.5
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          402355 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.5.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          402355 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.5.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.06856.
+          --adjust values (402355 variants) written to
+          GWAS.phen.5.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.6.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr6
+            --logistic
+            --out GWAS.phen.6
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          466626 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.6.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          466626 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.6.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.
+          --adjust values (466626 variants) written to
+          GWAS.phen.6.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.7.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr7
+            --logistic
+            --out GWAS.phen.7
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          357444 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.7.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          357444 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.7.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.01691.
+          --adjust values (357444 variants) written to
+          GWAS.phen.7.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.8.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr8
+            --logistic
+            --out GWAS.phen.8
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          359355 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.8.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          359355 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.8.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.03029.
+          --adjust values (359355 variants) written to
+          GWAS.phen.8.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.9.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr9
+            --logistic
+            --out GWAS.phen.9
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          272985 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.9.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          272985 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.9.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.20902.
+          --adjust values (272985 variants) written to
+          GWAS.phen.9.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.10.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr10
+            --logistic
+            --out GWAS.phen.10
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          326892 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.10.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          326892 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.10.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.03171.
+          --adjust values (326892 variants) written to
+          GWAS.phen.10.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.11.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr11
+            --logistic
+            --out GWAS.phen.11
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          308427 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.11.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          308427 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.11.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.01656.
+          --adjust values (308427 variants) written to
+          GWAS.phen.11.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.12.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr12
+            --logistic
+            --out GWAS.phen.12
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          304353 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.12.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          304353 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.12.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.04846.
+          --adjust values (304353 variants) written to
+          GWAS.phen.12.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.13.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr13
+            --logistic
+            --out GWAS.phen.13
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          243691 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.13.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          243691 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.13.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.01557.
+          --adjust values (243691 variants) written to
+          GWAS.phen.13.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.14.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr14
+            --logistic
+            --out GWAS.phen.14
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          197443 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.14.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          197443 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.14.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.10807.
+          --adjust values (197443 variants) written to
+          GWAS.phen.14.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.15.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr15
+            --logistic
+            --out GWAS.phen.15
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          152571 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.15.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          152571 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.15.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.13893.
+          --adjust values (152571 variants) written to
+          GWAS.phen.15.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.16.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr16
+            --logistic
+            --out GWAS.phen.16
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          156855 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.16.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          156855 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.16.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.08683.
+          --adjust values (156855 variants) written to
+          GWAS.phen.16.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.17.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr17
+            --logistic
+            --out GWAS.phen.17
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          122934 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.17.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          122934 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.17.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.08157.
+          --adjust values (122934 variants) written to
+          GWAS.phen.17.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.18.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr18
+            --logistic
+            --out GWAS.phen.18
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          174274 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.18.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          174274 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.18.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.00579.
+          --adjust values (174274 variants) written to
+          GWAS.phen.18.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.19.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr19
+            --logistic
+            --out GWAS.phen.19
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          88912 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.19.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          88912 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.19.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.00003.
+          --adjust values (88912 variants) written to
+          GWAS.phen.19.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.20.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr20
+            --logistic
+            --out GWAS.phen.20
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          128741 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.20.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          128741 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.20.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.06786.
+          --adjust values (128741 variants) written to
+          GWAS.phen.20.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.21.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr21
+            --logistic
+            --out GWAS.phen.21
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          76965 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.21.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          76965 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.21.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.
+          --adjust values (76965 variants) written to
+          GWAS.phen.21.assoc.logistic.adjusted .
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to GWAS.phen.22.log.
+          Options in effect:
+            --adjust
+            --allow-no-sex
+            --bfile POP_filtered_chr22
+            --logistic
+            --out GWAS.phen.22
+            --pheno PhenTemp.header
+            --pheno-name ProCan
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          68791 variants loaded from .bim file.
+          2081 people (0 males, 0 females, 2081 ambiguous) loaded from .fam.
+          Ambiguous sex IDs written to GWAS.phen.22.nosex .
+          2081 phenotype values present after --pheno.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2081 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          68791 variants and 2081 people pass filters and QC.
+          Among remaining phenotypes, 1050 are cases and 1031 are controls.
+          Writing logistic model association results to GWAS.phen.22.assoc.logistic ...
+          done.
+          --adjust: Genomic inflation est. lambda (based on median chisq) = 1.13218.
+          --adjust values (68791 variants) written to
+          GWAS.phen.22.assoc.logistic.adjusted .
