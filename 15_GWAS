@@ -749,17 +749,36 @@
 #Continuing steps of GWAS with log, logistic, and logistic.adjusted files
 
 #To concatinate all assoc.logistic files WITHOUT headers:
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S GWAS.phen.7.assoc.logistic.adjusted 
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S GWAS.phen.7.assoc.logistic
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ cat GWAS.phen.*.assoc.logistic > GWAS.phen.all.assoc.logistic
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ head -n 1 GWAS.phen.1.assoc.logistic > header
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S GWAS.phen.7.assoc.logistic
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ grep -v CHR GWAS.phen.all.assoc.logistic > gwasallnohead
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ cat header gwasallnohead > GWAS.phen.all.assoc.logistic
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ wc -l GWAS.phen.all.assoc.logistic 
-6098484 GWAS.phen.all.assoc.logistic
-jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less GWAS.phen.all.assoc.logistic 
-
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S GWAS.phen.7.assoc.logistic.adjusted 
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S GWAS.phen.7.assoc.logistic
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ cat GWAS.phen.*.assoc.logistic > GWAS.phen.all.assoc.logistic
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ head -n 1 GWAS.phen.1.assoc.logistic > header
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S GWAS.phen.7.assoc.logistic
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ grep -v CHR GWAS.phen.all.assoc.logistic > gwasallnohead
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ cat header gwasallnohead > GWAS.phen.all.assoc.logistic
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ wc -l GWAS.phen.all.assoc.logistic 
+    6098484 GWAS.phen.all.assoc.logistic
+    jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less GWAS.phen.all.assoc.logistic 
 #Concatinated file written as GWAS.phen.all.assoc.logistic
 
+#Now trying to make QQ and Manhattan Plots...
+#In RStudio:
+  #QQ-Plot
+    > data <- read.table("~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run/GWAS.phen.all.assoc.logistic", header = T)
+    > source('px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run/qqman.r')
+    > png(filename = "qqplot.png",res = 100)
+    > qq(data$P)
+    > dev.off()
+        RStudioGD 
+            2 
+  #Manhattan Plot
+    > View(qq)
+    > View(data)
+    > png(filename = "manplot.png",res = 100)
+    > manhattan(data)
+    > dev.off()
+        RStudioGD 
+            2
+            
+  #Now need to render and export the plots
 
