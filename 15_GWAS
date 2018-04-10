@@ -1,3 +1,4 @@
+4/5/18
 #Prepared POP_filtered files are ready for GWAS
   #POP_filtered files are in plink format
   #Phenotype files have no headers, so should be properly formatted
@@ -742,3 +743,10 @@
           --adjust: Genomic inflation est. lambda (based on median chisq) = 1.13218.
           --adjust values (68791 variants) written to
           GWAS.phen.22.assoc.logistic.adjusted .
+
+
+4/10/18
+#Continuing steps of GWAS with log, logistic, and logistic.adjusted files
+
+
+
