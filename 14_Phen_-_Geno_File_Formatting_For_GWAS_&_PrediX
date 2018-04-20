@@ -49,7 +49,7 @@ Formatting done within RStudio:
 	
 #Wrote the new table to PhenTemp
 	> write.table(PhenTemp, file = "PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
-	#Where is the file tho???
+	
 	
 
 	
