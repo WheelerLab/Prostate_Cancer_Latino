@@ -43,9 +43,9 @@ plink --bfile chr_# --r2 0.8 –-make-bed –-out chr_#
 #Lauren sent: --qual-threshold 0.8 to use, might be better suited for 
 
 2/16/18
-#Found Ally’s old post Imputation filtering and conversion. Steps 2 and 4 (disregard HW equilibrium part) will be used for MAF and r^2 filtering: https://github.com/abadalamenti1/Population_Expression_Prediction/blob/ef5160cbe7e1c5bdb613acf48b30dbba0ca4bcb7/B)_Steps_After_Imputation 
+#Found Aly’s old post Imputation filtering and conversion. Steps 2 and 4 (disregard HW equilibrium part) will be used for MAF and r^2 filtering: https://github.com/abadalamenti1/Population_Expression_Prediction/blob/ef5160cbe7e1c5bdb613acf48b30dbba0ca4bcb7/B)_Steps_After_Imputation 
 #2) Obtain the imputation output files using the emailed encription key, and remove SNPs with R2 < 0.8. Make sure these files are gzipped.
-nano R^2_Ally’s Format:
+nano R^2_Aly’s Format:
 ‘for i in {1..22}; 
 do bcftools filter -i 'R2>0.8' chr${i}.dose.vcf.gz > POP_chr${i}.R20.8.dose.vcf; 
 done’
