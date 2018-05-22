@@ -35,7 +35,7 @@ nano for_Loop_bash
 #Could not find how to filter MAF and r^2 with vcftools, so converted to plink and then I will filter
 #To filter by MAF 0.01:
 plink --bfile chr_# --maf 0.01 –-make-bed –-out chr_#
-#***Note***: If the same filename is used for the out file in this step, the unfiltered input file will now have a ~ at the end of it. Delete the input files, keep the new ones.
+#***Note***: If the same filename is used for the out file in this step, the unfiltered input file will now have a ~ at the end of it. Delete the ~input files, keep the new ones.
 
 #To filter by r^2 0.8:
 plink --bfile chr_# --r2 0.8 –-make-bed –-out chr_#
