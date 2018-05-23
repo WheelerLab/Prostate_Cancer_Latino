@@ -18,7 +18,9 @@ Formatting done within RStudio:
 
 
 #NOTE: As stated in line 79 of the 15_GWAS Repo, the following was done after realizing there were 2 missing dbGap files needed for GWAS
-#Now that we have them, they need to be formatted in RStudio similar to the previous dbGaP file
+#Missing 2 phenotype files found in the same directory: /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/
+#Repeated the steps above with R, Excel/Sheets to format them properly...
+
 
 #Mutate to add an FID column at the end of these plots
 	> df2 <- mutate(dbGaP_For_LA_c2, FID = 0)
