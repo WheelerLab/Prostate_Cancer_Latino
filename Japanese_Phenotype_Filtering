@@ -1,0 +1,33 @@
+5/22
+
+#This file is for separating the Japanese from the Lation data in the original dbGaP files
+#Original dbGaP files found at /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/
+    #phs000306.v4.pht001911.v1.p1.c1.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.DS-CA-PUB-MDS.txt
+    #phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt
+    #phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt
+    
+#Uploaded to Google sheets to delete everything but column headers and their data
+#Re-downloaded into RStudio for formatting:
+
+  #Mutate to add FID column to end of files
+    > temp1 <- mutate(dbGaP_For_JA_c1, FID = 0)
+    > temp2 <- mutate(dbGaP_For_JA_c2, FID = 0)
+    > temp5 <- mutate(dbGaP_For_JA_c5, FID = 0)
+      
+  #Format so that in the `ethni` column only J remains
+    > JAP1 <- dplyr::filter(temp1, ethni == "J")
+	  > JAP2 <- dplyr::filter(temp2, ethni == "J")
+	  > JAP5 <- dplyr::filter(temp5, ethni == "J")
+  
+  #Format so only 'FID IID status' remain
+    > Temp1 <- dplyr::select(JAP1, FID, geneva_id, status)
+    > Temp2 <- dplyr::select(JAP2, FID, geneva_id, status)
+    > Temp5 <- dplyr::select(JAP5, FID, geneva_id, status)
+    
+  #Combine all 3 Phenotype files into one
+    > JAPhenTemp <- rbind(Phen1, Phen2, Phen5)
+    
+  #Wrote the new table to `JA_PhenTemp`
+	  > write.table(JAPhenTemp, file = "JA_PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    
+  
