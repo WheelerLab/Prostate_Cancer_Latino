@@ -17,7 +17,7 @@ Formatting done within RStudio:
 
 
 
-#NOTE: As stated in the 15_GWAS Repo, the following was done after realizing there were 2 missing dbGap files needed for GWAS
+#NOTE: As stated in line 79 of the 15_GWAS Repo, the following was done after realizing there were 2 missing dbGap files needed for GWAS
 #Now that we have them, they need to be formatted in RStudio similar to the previous dbGaP file
 
 #Mutate to add an FID column at the end of these plots
