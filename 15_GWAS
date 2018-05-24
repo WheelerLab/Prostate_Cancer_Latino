@@ -3,7 +3,7 @@
   #POP_filtered files are in plink format
   #Phenotype files have no headers, so should be properly formatted
   
-  #Following steps/files found in /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run
+  #The following files found in /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run
   
   #Testing Chromosome 21 Genotype file first:
   
