@@ -10,27 +10,32 @@
 #Re-downloaded into RStudio for formatting:
 
   #Mutate to add FID column to end of files
-    > temp1 <- mutate(dbGaP_For_JA_c1, FID = 0)
-    > temp2 <- mutate(dbGaP_For_JA_c2, FID = 0)
-    > temp5 <- mutate(dbGaP_For_JA_c5, FID = 0)
+  	> temp1 <- mutate(dbGaP_For_JA_c1, FID = 0)
+	> temp2 <- mutate(dbGaP_For_JA_c2, FID = 0)
+	> temp5 <- mutate(dbGaP_For_JA_c5, FID = 0)
+	#Output file should have FID column on to the right of all other columns, and it should have all 0's
       
   #Format so that in the `ethni` column only J remains
-    > JAP1 <- dplyr::filter(temp1, ethni == "J")
-	  > JAP2 <- dplyr::filter(temp2, ethni == "J")
-	  > JAP5 <- dplyr::filter(temp5, ethni == "J")
+    	> JAP1 <- dplyr::filter(temp1, ethni == "J")
+    	> JAP2 <- dplyr::filter(temp2, ethni == "J")
+    	> JAP5 <- dplyr::filter(temp5, ethni == "J")
+	#All "L" should be gone
   
   #Format so only 'FID IID status' remain
-    > Temp1 <- dplyr::select(JAP1, FID, geneva_id, status)
-    > Temp2 <- dplyr::select(JAP2, FID, geneva_id, status)
-    > Temp5 <- dplyr::select(JAP5, FID, geneva_id, status)
+   	> Temp1 <- dplyr::select(JAP1, FID, geneva_id, status)
+    	> Temp2 <- dplyr::select(JAP2, FID, geneva_id, status)
+    	> Temp5 <- dplyr::select(JAP5, FID, geneva_id, status)
     
   #Combine all 3 Phenotype files into one
-    > JAPhenTemp <- rbind(Phen1, Phen2, Phen5)
+    	> JAPhenTemp <- rbind(Temp1, Temp2, Temp5)
     
   #Wrote the new table to `JA_PhenTemp`
-    > write.table(JAPhenTemp, file = "JA_PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
+    	> write.table(JAPhenTemp, file = "JA_PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  
+  
+  #Within Plink:
   
   #To finally prep the files for GWAS, they all need headers
   #Column headers added for "FID IID ProCan" - "ProCan" details the Case (1) vs Control (2)
-    > echo -e "FID IID ProCan" | cat - JA_PhenTemp > JA_PhenTemp.header
+    	echo -e "FID IID ProCan" | cat - JA_PhenTemp > JA_PhenTemp.header
   
