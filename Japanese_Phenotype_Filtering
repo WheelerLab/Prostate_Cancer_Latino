@@ -28,6 +28,9 @@
     > JAPhenTemp <- rbind(Phen1, Phen2, Phen5)
     
   #Wrote the new table to `JA_PhenTemp`
-	  > write.table(JAPhenTemp, file = "JA_PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
-    
+    > write.table(JAPhenTemp, file = "JA_PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
+  
+  #To finally prep the files for GWAS, they all need headers
+  #Column headers added for "FID IID ProCan" - "ProCan" details the Case (1) vs Control (2)
+    > echo -e "FID IID ProCan" | cat - JA_PhenTemp > JA_PhenTemp.header
   
