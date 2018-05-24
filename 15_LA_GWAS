@@ -79,9 +79,9 @@
     #NOTE: Now that we have the files, we need to format and merge them again...see 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
   
   #2 Phenotype files found and merged in 14_Phen_&_Geno_File_Formatting_For_GWAS/Predix
-  #File written as 'PhenTem' - we need to add column heads to it
+  #File written as 'PhenTemp' - we need to add column heads to it
   
-    echo -e "FID IID ProCan " | cat - PhenTemp > PhenTemp.header
+    echo -e "FID IID ProCan" | cat - PhenTemp > PhenTemp.header
     
   #Now we can finally start the GWAS - remember to specify the --allow-no-sex flag after the --pheno flag!
   
