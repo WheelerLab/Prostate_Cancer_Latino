@@ -165,6 +165,12 @@
     #Concatinated file written as GWAS.phen.all.assoc.logistic
     
     #Next steps are to make QQ and Manhattan Plots with this file
-    
-    
-    
+    #In RStudio
+        > data1 <- read.table("~/Mohammed_files/GWAS_files/GWAS.phen.all.assoc.logistic" header = T)
+        > source('/home/jack/Mohammed_files/qqman.r')
+        > png(filename = "JA_qqplot.png", res = 100)
+        > qq(data1$P)
+        > dev.off()
+        #Didn't seem to make a plot...look into later
+
+
