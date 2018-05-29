@@ -1,1 +1,17 @@
+#Testing chr21 filtered file for GWAS to see if I prepped it correctly
 
+    plink --bfile POP_filtered_chr21 --logistic --adjust --pheno JA_PhenTemp.header --allow-no-sex --pheno-name ProCan  --out GWAS.phen.21
+    
+#This run worked. Created new directory in /home/jack/Mohammed_files/GWAS_files to store the output
+  ls GWAS_files
+      GWAS.phen.21.assoc.logistic           GWAS.phen.21.log
+      GWAS.phen.21.assoc.logistic.adjusted  GWAS.phen.21.nosex
+      
+ #Tested the same thing on chr22 to troubleshoot Mohammed's prevous issues - successful
+  ls GWAS_files
+      GWAS.phen.21.assoc.logistic           GWAS.phen.22.assoc.logistic
+      GWAS.phen.21.assoc.logistic.adjusted  GWAS.phen.22.assoc.logistic.adjusted
+      GWAS.phen.21.log                      GWAS.phen.22.log
+      GWAS.phen.21.nosex                    GWAS.phen.22.nosex
+      
+ 
