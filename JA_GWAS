@@ -53,7 +53,9 @@
         MAF_Ally'sFormat_3_4    POP_filtered_chr18.recode.vcf
         MAF_Ally'sFormat_5_6    POP_filtered_chr19.recode.vcf
         
-        
+
+5/29/18
+
  #Running vcfToBBF to convert all of the POP_filtered_chr#.recode.vcf files into their Plink formats for GWAS
  
     nano vcfToBBF
@@ -139,4 +141,30 @@
         GWAS.phen.17.assoc.logistic           GWAS.phen.2.log
         GWAS.phen.17.assoc.logistic.adjusted  GWAS.phen.2.nosex
 
+    #The next step is to combine all the assoc.logistic files WITHOUT headers
+        #Concatinate all the .logistic files into one
+            cat GWAS.phen.*.assoc.logistic > GWAS.phen.all.assoc.logistic
+        
+        #Take the header of the chromosome 1 file (can get it from any chromosome since they're all the same)
+            head -n 1 GWAS.phen.1.assoc.logistic > header
+            
+            less -S header
+             CHR           SNP         BP   A1       TEST    NMISS         OR         STAT            P 
+             
+            grep -v CHR GWAS.phen.all.assoc.logistic > gwasallnohead
+        
+        #Concatinate into one file INCLUDING header
+            cat header gwasallnohead > GWAS.phen.all.assoc.logistic
+    
+        #Check SNP count
+            wc -l GWAS.phen.all.assoc.logistic             
+            6098484 GWAS.phen.all.assoc.logistic
+    
+            less GWAS.phen.all.assoc.logistic 
+        
+    #Concatinated file written as GWAS.phen.all.assoc.logistic
+    
+    #Next steps are to make QQ and Manhattan Plots with this file
+    
+    
     
