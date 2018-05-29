@@ -14,4 +14,46 @@
       GWAS.phen.21.log                      GWAS.phen.22.log
       GWAS.phen.21.nosex                    GWAS.phen.22.nosex
       
- 
+ #All other chromosome files were filtered with r^2 and MAF, showing no problems Mohammed was encountering (no binary files created)
+ #Current files at this step:
+    jack@wheelerlab1:~/Mohammed_files$ ls
+        chr10.dose.vcf.gz       MAF_Ally'sFormat_7_8           POP_filtered_chr1.bed
+        chr11.dose.vcf.gz       MAF_Ally'sFormat_9_10          POP_filtered_chr1.bim
+        chr12.dose.vcf.gz       nohup.out                      POP_filtered_chr1.fam
+        chr13.dose.vcf.gz       POP_chr10.R20.8.dose.vcf.gz    POP_filtered_chr1.log
+        chr14.dose.vcf.gz       POP_chr11.R20.8.dose.vcf.gz    POP_filtered_chr1.recode.vcf
+        chr15.dose.vcf.gz       POP_chr12.R20.8.dose.vcf.gz    POP_filtered_chr20.bed
+        chr16.dose.vcf.gz       POP_chr13.R20.8.dose.vcf.gz    POP_filtered_chr20.bim
+        chr17.dose.vcf.gz       POP_chr14.R20.8.dose.vcf.gz    POP_filtered_chr20.fam
+        chr18.dose.vcf.gz       POP_chr15.R20.8.dose.vcf.gz    POP_filtered_chr20.log
+        chr19.dose.vcf.gz       POP_chr16.R20.8.dose.vcf.gz    POP_filtered_chr20.recode.vcf
+        chr1.dose.vcf.gz        POP_chr17.R20.8.dose.vcf.gz    POP_filtered_chr21.bed
+        chr20.dose.vcf.gz       POP_chr18.R20.8.dose.vcf.gz    POP_filtered_chr21.bim
+        chr21.dose.vcf.gz       POP_chr19.R20.8.dose.vcf.gz    POP_filtered_chr21.fam
+        chr22.dose.vcf.gz       POP_chr1.R20.8.dose.vcf.gz     POP_filtered_chr21.log
+        chr2.dose.vcf.gz        POP_chr20.R20.8.dose.vcf.gz    POP_filtered_chr21.recode.vcf
+        chr3.dose.vcf.gz        POP_chr21.R20.8.dose.vcf.gz    POP_filtered_chr22.bed
+        chr4.dose.vcf.gz        POP_chr22.R20.8.dose.vcf.gz    POP_filtered_chr22.bim
+        chr5.dose.vcf.gz        POP_chr2.R20.8.dose.vcf.gz     POP_filtered_chr22.fam
+        chr6.dose.vcf.gz        POP_chr3.R20.8.dose.vcf.gz     POP_filtered_chr22.log
+        chr7.dose.vcf.gz        POP_chr4.R20.8.dose.vcf.gz     POP_filtered_chr22.recode.vcf
+        chr8.dose.vcf.gz        POP_chr5.R20.8.dose.vcf.gz     POP_filtered_chr2.recode.vcf
+        chr9.dose.vcf.gz        POP_chr6.R20.8.dose.vcf.gz     POP_filtered_chr3.recode.vcf
+        GWAS_files              POP_chr7.R20.8.dose.vcf.gz     POP_filtered_chr4.recode.vcf
+        gzip                    POP_chr8.R20.8.dose.vcf.gz     POP_filtered_chr5.recode.vcf
+        JA_phenotype            POP_chr9.R20.8.dose.vcf.gz     POP_filtered_chr6.recode.vcf
+        JA_PhenTemp.header      POP_filtered_chr10.recode.vcf  POP_filtered_chr7.recode.vcf
+        MAF_Ally'sFormat        POP_filtered_chr11.recode.vcf  POP_filtered_chr8.recode.vcf
+        MAF_Ally'sFormat_11_12  POP_filtered_chr12.recode.vcf  POP_filtered_chr9.recode.vcf
+        MAF_Ally'sFormat_1_2    POP_filtered_chr13.recode.vcf  R^2_Ally'sFormat
+        MAF_Ally'sFormat_13_14  POP_filtered_chr14.recode.vcf  vcfToBBF
+        MAF_Ally'sFormat_15_16  POP_filtered_chr15.recode.vcf  vcfToBBF_chr20
+        MAF_Ally'sFormat_17_18  POP_filtered_chr16.recode.vcf  vcfToBBF_chr21
+        MAF_Ally'sFormat_19_20  POP_filtered_chr17.recode.vcf  vcfToBBF_chr22
+        MAF_Ally'sFormat_3_4    POP_filtered_chr18.recode.vcf
+        MAF_Ally'sFormat_5_6    POP_filtered_chr19.recode.vcf
+        
+        
+ #Running vcfToBBF to convert all of the POP_filtered_chr#.recode.vcf files into their Plink formats for GWAS
+ #Once converted, the GWAS can be run
+
