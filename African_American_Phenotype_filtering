@@ -3,4 +3,11 @@
 #Continuing from where Mohammed left off with his African American cohort - this page is for formatting the phenotype for future GWAS
 #These steps will be similar to the ones done in Japanese_Phenotype_filtering
 
+#dbGaP files found in /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/
+    phs000306.v4.pht002081.v1.p1.c1.MEC_Prostate_Cancer_AA_Subject_Phenotypes.DS-CA-PUB-MDS.txt
+    phs000306.v4.pht002081.v1.p1.c2.MEC_Prostate_Cancer_AA_Subject_Phenotypes.GRU-MDS.txt
+    phs000306.v4.pht002081.v1.p1.c5.MEC_Prostate_Cancer_AA_Subject_Phenotypes.HMB-PUB-MDS.txt
+
+#Copied all 3 files to /home/jack/Mohammed_files/AA/AA_Phenotype
+    cp phs000306.v4.pht002081.v1.p1.c* /home/jack/Mohammed_files/AA/AA_Phenotype/
 
