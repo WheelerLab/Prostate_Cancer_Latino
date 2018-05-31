@@ -1,5 +1,5 @@
 7/26/17
-7_GWAS_PLOT_LA
+07. QC Plotting - LA
 
 "%&%" = function(a,b) paste(a,b,sep="")
   my.dir= "Z:/px_prostate_cancer_LA/"
