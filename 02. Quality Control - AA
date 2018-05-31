@@ -12,7 +12,8 @@ touch QC
 #Copy the .bed file: cp /home/jack/GENEVA_MEC_ProstateCancer_AA_all.bed .
 #Copy the .bim file: cp /home/jack/GENEVA_MEC_ProstateCancer_AA_all.bim .
 #Copy the .fam file: cp /home/jack/GENEVA_MEC_ProstateCancer_AA_all.fam .
-#Use ls to check and make sure the files were copied to the correct directory
+
+#Use `ls` to check and make sure the files were copied to the correct directory
 
 #QCStep1
 plink --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all -missing --out /home/jack/px_prostate_cancer_AA/QC
