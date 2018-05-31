@@ -1,4 +1,4 @@
-9_GWASQC_JA
+09. Quality Control - JA
 
 #QCStep1
 plink --bfile /home/jack/px_prostate_cancer_JA/JA_list --missing -out /home/jack/px_prostate_cancer_JA/QC
