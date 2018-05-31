@@ -1,4 +1,4 @@
-13. UMich PScript & R^2 MAF Filtering
+12. UMich PScript & R^2 MAF Filtering
 2/2/18
 
 #Make sure you keep track of how many SNPs are in the current dosages files – you will need to keep track of how many are filtered out once the Python script is run
