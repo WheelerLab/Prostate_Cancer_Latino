@@ -1,4 +1,5 @@
-2_GWASQC_AA
+02. GWAS QC - AA
+#Quality Control for the African American cohort
 
 #Start by making a new directory for the AA data called “px_prostate_cancer_AA”
 mkdir px_prostate_cancer_AA
