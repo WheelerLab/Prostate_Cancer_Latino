@@ -1,5 +1,5 @@
 7/25/17
-5_Separating_JL_Files
+05. Separating JA and LA Files
 
 #We have to separate the Japanese and Latino cohorts from their combined file
 #Use the “less-S” command on the combined file, then create bed, bim, fam files and separate the two cohorts
