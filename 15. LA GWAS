@@ -1,3 +1,7 @@
+NOTE: As of 6/12/18, there needs to be configuration with PC Covariates before GWAS can be run properly.
+      Regardless, here are the steps for the GWAS.
+
+
 15. LA GWAS
 4/5/18
 #Prepared POP_filtered files are ready for GWAS
