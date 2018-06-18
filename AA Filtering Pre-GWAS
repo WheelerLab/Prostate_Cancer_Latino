@@ -17,4 +17,41 @@
 #Using R^2 script to filter:
     nohup bash R^2_Ally'sFormat &
     #Should output POP_chr#.R20.8.dose.vcf files
+
+#Before moving on, steps with PC Covariates need to be done
+#First, the pre-PCA files were taken from Mohammed's directory
+    jack@wheelerlab1:/home/mohammed/px_prostate_cancer_AA$ cp QC6e* /home/jack/Mohammed_files/AA/QC_files/
+    jack@wheelerlab1:/home/mohammed/px_prostate_cancer_AA$ cp QC6f1.par /home/jack/Mohammed_files/AA/QC_files/
     
+~/Mohammed_files/AA/QC_files$ ls
+    QC6e1.eval  QC6e1.fam  QC6e1.map      QC6e1.ped       QC6e1.prune.out
+    QC6e1.evec  QC6e1.log  QC6e1.outlier  QC6e1.prune.in  QC6f1.par
+
+#NOTE: These files were found in /home/mohammed/px_prostate_cancer_AA NOT in the AAnew directory
+#PCA can be run with these files - however I contacted Mohammed to make sure they are still viable to use.
+#For now, I'm going to use them anyway:
+
+    #Delete the QC6f1.par
+        rm QC6f1.par
+
+    #ERROR: Indicating I can not use these files since they are Mohammed's - use following command to get around access
+        perl /home/wheelerlab1/Data/GWAS_QC_scripts/make_par_file.pl /home/jack/Mohammed_files/AA/My_QC_files/QC6e1 0 > /home/jack/Mohammed_files/AA/My_QC_files/QC6f1.par
+    
+    jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ smartpca -p /home/jack/Mohammed_files/AA/My_QC_files/QC6f1.par 
+            parameter file: /home/jack/Mohammed_files/AA/My_QC_files/QC6f1.par
+            ### THE INPUT PARAMETERS
+            ##PARAMETER NAME: VALUE
+            genotypename: /home/jack/Mohammed_files/AA/My_QC_files/QC6e1.ped
+            snpname: /home/jack/Mohammed_files/AA/My_QC_files/QC6e1.map
+            indivname: /home/jack/Mohammed_files/AA/My_QC_files/QC6e1.fam
+            evecoutname: /home/jack/Mohammed_files/AA/My_QC_files/QC6e1.evec
+            evaloutname: /home/jack/Mohammed_files/AA/My_QC_files/QC6e1.eval
+            outliername: /home/jack/Mohammed_files/AA/My_QC_files/QC6e1.outlier
+            numoutevec: 10
+            numoutlieriter: 0
+            numoutlierevec: 2
+            outliersigmathresh: 6
+            ## smartpca version: 13050
+            norm used
+
+            genetic distance set from physical distance
