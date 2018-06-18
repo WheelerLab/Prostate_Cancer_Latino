@@ -31,11 +31,17 @@
 #PCA can be run with these files - however I contacted Mohammed to make sure they are still viable to use.
 #For now, I'm going to use them anyway:
 
-    #Delete the QC6f1.par
+    #Delete:
         rm QC6f1.par
+        rm QC6e1.eval
+        rm QC6e1.evec
 
-    #ERROR: Indicating I can not use these files since they are Mohammed's - use following command to get around access
+    #ERROR: Indicating I can not use these files since they are Mohammed's - use following command to get around access:
         perl /home/wheelerlab1/Data/GWAS_QC_scripts/make_par_file.pl /home/jack/Mohammed_files/AA/My_QC_files/QC6e1 0 > /home/jack/Mohammed_files/AA/My_QC_files/QC6f1.par
+    
+    jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ ls
+        QC6e1.fam  QC6e1.log  QC6e1.map  QC6e1.outlier  QC6e1.ped  QC6e1.prune.in  QC6e1.prune.out  QC6f1.par
+
     
     jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ smartpca -p /home/jack/Mohammed_files/AA/My_QC_files/QC6f1.par 
                 parameter file: /home/jack/Mohammed_files/AA/My_QC_files/QC6f1.par
