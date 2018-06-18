@@ -7,7 +7,21 @@
     phs000306.v4.pht002081.v1.p1.c1.MEC_Prostate_Cancer_AA_Subject_Phenotypes.DS-CA-PUB-MDS.txt
     phs000306.v4.pht002081.v1.p1.c2.MEC_Prostate_Cancer_AA_Subject_Phenotypes.GRU-MDS.txt
     phs000306.v4.pht002081.v1.p1.c5.MEC_Prostate_Cancer_AA_Subject_Phenotypes.HMB-PUB-MDS.txt
+    phs000306.v4.pht002082.v1.p1.c1.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.DS-CA-PUB-MDS.txt
+    phs000306.v4.pht002082.v1.p1.c2.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.GRU-MDS.txt
+    phs000306.v4.pht002082.v1.p1.c4.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.CHDSADM.txt
 
-#Copied all 3 files to /home/jack/Mohammed_files/AA/AA_Phenotype
-    cp phs000306.v4.pht002081.v1.p1.c* /home/jack/Mohammed_files/AA/AA_Phenotype/
+#Copied all 6 files to /home/jack/Mohammed_files/AA/AA_Phenotype
+    cp phs000306.v4.pht00208* /home/jack/Mohammed_files/AA/AA_Phenotype/
+    
+/home/jack/Mohammed_files/AA/AA_Phenotype/ ls
+    phs000306.v4.pht002081.v1.p1.c1.MEC_Prostate_Cancer_AA_Subject_Phenotypes.DS-CA-PUB-MDS.txt
+    phs000306.v4.pht002081.v1.p1.c2.MEC_Prostate_Cancer_AA_Subject_Phenotypes.GRU-MDS.txt
+    phs000306.v4.pht002081.v1.p1.c5.MEC_Prostate_Cancer_AA_Subject_Phenotypes.HMB-PUB-MDS.txt
+    phs000306.v4.pht002082.v1.p1.c1.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.DS-CA-PUB-MDS.txt
+    phs000306.v4.pht002082.v1.p1.c2.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.GRU-MDS.txt
+    phs000306.v4.pht002082.v1.p1.c4.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.CHDSADM.txt
 
+#NOTE: Plink may detect the 'status' of individuals in these files as the opposite of what they actually are.
+       1: 
+       2: As of 6/17/18, can't find where they are specified in the files
