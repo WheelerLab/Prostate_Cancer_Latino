@@ -1,14 +1,22 @@
+NOTE: this directory was clarified by Mohammed as safe to use for QC files - just not for Imputing data
+    
+        jack@wheelerlab1:/home/mohammed/px_prostate_cancer_AA$ cp QC6d1.b* /home/jack/Mohammed_files/AA/My_QC_files/
+        jack@wheelerlab1:/home/mohammed/px_prostate_cancer_AA$ cp QC6d1.fam /home/jack/Mohammed_files/AA/My_QC_files/
 
+    #The next step in QC was to prune the data, so I did just that:
+        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC6d1 --indep-pairwise 50 5 0.3 --recode --out QC7
+        
+    #Then I made my bfiles:
+        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC6d1 --make-bed --out QC7
+    
+    #Run the PCA
+        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC7 --pca 10 --out /home/jack/Mohammed_files/AA/Post-PCA/PCA
+    
+        jack@wheelerlab1:~/Mohammed_files/AA/Post-PCA$ ls
+            PCA.eigenval  PCA.eigenvec  PCA.log
+        #Now we have the eigenvec file for GWAS!
 
-
-
-
-
-
-
-
-
-#Formatted in R:
+#Formatted eigenvec in R:
     > pc1 = "/home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec"
     > JA_pcaDat = read.table(pc, col.names = c("FID","IID","PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10"))
     > View(JA_pcaDat)
