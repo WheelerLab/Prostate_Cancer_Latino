@@ -1,0 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+#Formatted in R:
+    > pc1 = "/home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec"
+    > JA_pcaDat = read.table(pc, col.names = c("FID","IID","PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10"))
+    > View(JA_pcaDat)
