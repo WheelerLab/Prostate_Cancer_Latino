@@ -1,0 +1,2 @@
+#This file formats Latino QC data to the proper .eigenvec file for GWAS
+#Start by taking pre-pruned data from earlier QC analysis (found in the file "0.6 Quality Control - LA")
