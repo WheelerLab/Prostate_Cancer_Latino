@@ -105,4 +105,9 @@
         --pca: Results saved to /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.eigenval
         and /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.eigenvec .
 
-#Now format in R for columns "FID IID PC1...PC10"
+#Check for files:
+    jack@wheelerlab1:~/px_prostate_cancer_LA/Post-PCA$ ls
+        PCA.eigenval  PCA.eigenvec  PCA.log
+
+
+#Now format the .eigenvec file in R for columns "FID IID PC1...PC10"
