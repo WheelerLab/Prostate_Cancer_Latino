@@ -1,2 +1,108 @@
 #This file formats Latino QC data to the proper .eigenvec file for GWAS
 #Start by taking pre-pruned data from earlier QC analysis (found in the file "0.6 Quality Control - LA")
+#Copying these files to a new directory for clarity:
+    jack@wheelerlab1:~/px_prostate_cancer_LA$ mkdir PCA-QC_files
+    
+    #First get the .bed .bim .fam files from the most recent (pre-pruned) QC step
+    jack@wheelerlab1:~/px_prostate_cancer_LA$ cp QC6d1* /home/jack/px_prostate_cancer_LA/PCA-QC_files/
+    
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ ls
+          QC6d1.bed  QC6d1.bim  QC6d1.fam  QC6d1.log
+
+#Prunning step:
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC6d1 --indep-pairwise 50 5 0.1 --recode --out QC6e1
+          PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+          (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+          Logging to QC6e1.log.
+          Options in effect:
+            --bfile QC6d1
+            --indep-pairwise 50 5 0.1
+            --out QC6e1
+            --recode
+
+          64070 MB RAM detected; reserving 32035 MB for main workspace.
+          60596 variants loaded from .bim file.
+          2316 people (2122 males, 194 females) loaded from .fam.
+          391 phenotype values loaded from .fam.
+          Using 1 thread (no multithreaded calculations invoked).
+          Before main variant filters, 2316 founders and 0 nonfounders present.
+          Calculating allele frequencies... done.
+          Total genotyping rate is 0.999117.
+          60596 variants and 2316 people pass filters and QC.
+          Among remaining phenotypes, 0 are cases and 391 are controls.  (1925 phenotypes
+          are missing.)
+          --recode ped to QC6e1.ped + QC6e1.map ... done.
+          Pruned 1712 variants from chromosome 1, leaving 3034.
+          Pruned 1790 variants from chromosome 2, leaving 2860.
+          Pruned 1483 variants from chromosome 3, leaving 2546.
+          Pruned 1282 variants from chromosome 4, leaving 2285.
+          Pruned 1459 variants from chromosome 5, leaving 2290.
+          Pruned 1513 variants from chromosome 6, leaving 2296.
+          Pruned 1214 variants from chromosome 7, leaving 2053.
+          Pruned 1207 variants from chromosome 8, leaving 1886.
+          Pruned 1066 variants from chromosome 9, leaving 1830.
+          Pruned 1143 variants from chromosome 10, leaving 1968.
+          Pruned 1140 variants from chromosome 11, leaving 1782.
+          Pruned 1120 variants from chromosome 12, leaving 1856.
+          Pruned 850 variants from chromosome 13, leaving 1432.
+          Pruned 771 variants from chromosome 14, leaving 1312.
+          Pruned 750 variants from chromosome 15, leaving 1240.
+          Pruned 815 variants from chromosome 16, leaving 1364.
+          Pruned 673 variants from chromosome 17, leaving 1265.
+          Pruned 710 variants from chromosome 18, leaving 1294.
+          Pruned 440 variants from chromosome 19, leaving 1032.
+          Pruned 664 variants from chromosome 20, leaving 1102.
+          Pruned 355 variants from chromosome 21, leaving 650.
+          Pruned 368 variants from chromosome 22, leaving 694.
+          Pruning complete.  22525 of 60596 variants removed.
+          Marker lists written to QC6e1.prune.in and QC6e1.prune.out .
+
+#Now make bbf files
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC6d1 --make-bed --out QC7
+        PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+        (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+        Logging to QC7.log.
+        Options in effect:
+          --bfile QC6d1
+          --make-bed
+          --out QC7
+
+        64070 MB RAM detected; reserving 32035 MB for main workspace.
+        60596 variants loaded from .bim file.
+        2316 people (2122 males, 194 females) loaded from .fam.
+        391 phenotype values loaded from .fam.
+        Using 1 thread (no multithreaded calculations invoked).
+        Before main variant filters, 2316 founders and 0 nonfounders present.
+        Calculating allele frequencies... done.
+        Total genotyping rate is 0.999117.
+        60596 variants and 2316 people pass filters and QC.
+        Among remaining phenotypes, 0 are cases and 391 are controls.  (1925 phenotypes
+        are missing.)
+        --make-bed to QC7.bed + QC7.bim + QC7.fam ... done.
+
+#Now run the PCA in Plink
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC7 --pca 10 --out /home/jack/px_prostate_cancer_LA/Post-PCA/PCA
+        PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+        (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+        Logging to /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.log.
+        Options in effect:
+          --bfile QC7
+          --out /home/jack/px_prostate_cancer_LA/Post-PCA/PCA
+          --pca 10
+
+        64070 MB RAM detected; reserving 32035 MB for main workspace.
+        60596 variants loaded from .bim file.
+        2316 people (2122 males, 194 females) loaded from .fam.
+        391 phenotype values loaded from .fam.
+        Using up to 11 threads (change this with --threads).
+        Before main variant filters, 2316 founders and 0 nonfounders present.
+        Calculating allele frequencies... done.
+        Total genotyping rate is 0.999117.
+        60596 variants and 2316 people pass filters and QC.
+        Among remaining phenotypes, 0 are cases and 391 are controls.  (1925 phenotypes
+        are missing.)
+        Relationship matrix calculation complete.
+        --pca: Results saved to /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.eigenval
+        and /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.eigenvec .
+
+#Now format in R for columns "FID IID PC1...PC10"
