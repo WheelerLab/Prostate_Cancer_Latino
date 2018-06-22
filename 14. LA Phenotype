@@ -53,5 +53,7 @@ Formatting done within RStudio:
 	> write.table(PhenTemp, file = "PhenTemp", row.names = FALSE, col.names = FALSE, quote = FALSE)
 	
 	
-
+#To finally prep the files for GWAS, they all need headers
+  #Column headers added for "FID IID ProCan" - "ProCan" details the Case (1) vs Control (2)
+	jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ echo -e "FID IID ProCan" | cat - PhenTemp > LA_PhenTemp.header
 	
