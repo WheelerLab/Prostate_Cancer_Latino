@@ -23,7 +23,34 @@
     phs000306.v4.pht002082.v1.p1.c4.Non_MEC_Prostate_Cancer_AA_Subject_Phenotypes.CHDSADM.txt
 
 #NOTE: Plink may detect the 'status' of individuals in these files as the opposite of what they actually are.
-       1: 
-       2: As of 6/17/18, can't find where they are specified in the files
+       1: Case
+       2: Control
 
 #Formatting in Google Sheets to get rid of unecessary diction above the file data
+#Uploaded files to Google sheets and delted the diction, leaving only column headers and the data in each one
+#Redownloaded for further formatting in R:
+
+    #First we add the FID column to each of the 6 files:
+        > AA_MEC1 <- mutate(AA_MEC_C1_2, FID = 0)
+        > AA_MEC2 <- mutate(AA_MEC_C2_2, FID = 0)
+        > AA_MEC5 <- mutate(AA_MEC_C5_2, FID = 0)
+        > AA_Non_MEC1 <- mutate(AA_Non_MEC_C1_2, FID = 0)
+        > AA_Non_MEC2 <- mutate(AA_Non_MEC_C2_2, FID = 0)
+        > AA_Non_MEC4 <- mutate(AA_Non_MEC_C4_2, FID = 0)
+
+    #Formatted so only 'FID IID status' remain:
+        > AA_MEC1_Phen <- dplyr::select(AA_MEC1, FID, geneva_id, status)
+        > AA_MEC2_Phen <- dplyr::select(AA_MEC2, FID, geneva_id, status)
+        > AA_MEC5_Phen <- dplyr::select(AA_MEC5, FID, geneva_id, status)
+        > AA_Non_MEC1_Phen <- dplyr::select(AA_Non_MEC1, FID, GENEVA_ID, STATUS)
+        > AA_Non_MEC2_Phen <- dplyr::select(AA_Non_MEC2, FID, GENEVA_ID, STATUS)
+        > AA_Non_MEC4_Phen <- dplyr::select(AA_Non_MEC4, FID, GENEVA_ID, STATUS)
+        #Should change the column headers so they all match case...
+        
+    #Changing the column headers
+    > names(AA_Non_MEC1_Phen) <- c("FID", "geneva_id", "status")
+    > names(AA_Non_MEC2_Phen) <- c("FID", "geneva_id", "status")
+    > names(AA_Non_MEC4_Phen) <- c("FID", "geneva_id", "status")
+    
+    
+    
