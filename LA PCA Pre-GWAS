@@ -81,7 +81,7 @@
         --make-bed to QC7.bed + QC7.bim + QC7.fam ... done.
 
 #Now run the PCA in Plink
-    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC7 --pca 10 --out /home/jack/px_prostate_cancer_LA/Post-PCA/PCA
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC7 --pca 10 header --out /home/jack/px_prostate_cancer_LA/Post-PCA/PCA
         PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
         (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
         Logging to /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.log.
@@ -109,9 +109,4 @@
     jack@wheelerlab1:~/px_prostate_cancer_LA/Post-PCA$ ls
         PCA.eigenval  PCA.eigenvec  PCA.log
 
-
-#Now format the .eigenvec file in R for columns "FID IID PC1...PC10"
-    > pc2 = "/home/jack/px_prostate_cancer_LA/Post-PCA/PCA.eigenvec"
-    > LA_pcaDat = read.table(pc2, col.names = c("FID","IID","PC1","PC2","PC3","PC4","PC5","PC6","PC7","PC8","PC9","PC10"))
-    > View(LA_pcaDat)
     
