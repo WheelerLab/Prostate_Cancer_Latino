@@ -26,6 +26,8 @@
        1: Case
        2: Control
 
+6/21/18
+
 #Formatting in Google Sheets to get rid of unecessary diction above the file data
 #Uploaded files to Google sheets and delted the diction, leaving only column headers and the data in each one
 #Redownloaded for further formatting in R:
@@ -52,5 +54,5 @@
     > names(AA_Non_MEC2_Phen) <- c("FID", "geneva_id", "status")
     > names(AA_Non_MEC4_Phen) <- c("FID", "geneva_id", "status")
     
-    
+    #Next step is to bind them all together for the GWAS...but how should the MEC vs. Non be bound?
     
