@@ -38,4 +38,34 @@
   #To finally prep the files for GWAS, they all need headers
   #Column headers added for "FID IID ProCan" - "ProCan" details the Case (1) vs Control (2)
     	echo -e "FID IID ProCan" | cat - JA_PhenTemp > JA_PhenTemp.header
-  
+	
+  jack@wheelerlab1:~/Mohammed_files/JA/JA_phenotype$ less -S JA_PhenTemp.header 
+
+			FID IID ProCan
+			0 231001664 2
+			0 231002383 2
+			0 231003044 1
+			0 231004458 1
+			0 231004460 1
+			0 231004878 1
+			0 231005983 1
+			0 231008628 2
+			0 231011895 1
+			0 231014780 1
+			0 231014892 1
+			0 231015081 1
+			0 231015740 2
+			0 231017004 1
+			0 231020147 1
+			0 231021221 2
+			0 231025541 2
+			0 231028132 1
+			0 231029419 1
+			0 231030204 2
+			0 231030206 1
+			0 231031097 2
+			0 231032070 1
+			0 231034054 1
+			0 231034879 2
+			0 231035361 2
+			0 231039649 2
