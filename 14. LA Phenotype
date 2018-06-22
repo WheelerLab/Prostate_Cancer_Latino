@@ -56,4 +56,37 @@ Formatting done within RStudio:
 #To finally prep the files for GWAS, they all need headers
   #Column headers added for "FID IID ProCan" - "ProCan" details the Case (1) vs Control (2)
 	jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ echo -e "FID IID ProCan" | cat - PhenTemp > LA_PhenTemp.header
+	jack@wheelerlab1:~/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$ less -S PhenTemp.header 
+			FID IID ProCan 
+			0 231000471 1
+			0 231000883 2
+			0 231000905 1
+			0 231001018 2
+			0 231001106 1
+			0 231001247 1
+			0 231001329 1
+			0 231001903 1
+			0 231002008 2
+			0 231002186 1
+			0 231002191 1
+			0 231002243 2
+			0 231002262 2
+			0 231002806 2
+			0 231003256 1
+			0 231003438 2
+			0 231003804 1
+			0 231003876 1
+			0 231004184 2
+			0 231004607 1
+			0 231005089 2
+			0 231005168 1
+			0 231005399 2
+			0 231005454 1
+			0 231005459 1
+			0 231005786 2
+			0 231006042 2
+			0 231006319 1
+			0 231006465 1
+	#Ready for GWAS
+	
 	
