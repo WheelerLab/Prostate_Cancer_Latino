@@ -11,7 +11,7 @@ Formatting done within RStudio:
 #Then the 3 columns were written to “phen”, also using dplyr
 	Phen <- dplyr::select(df1, FID, geneva_id, status)
 #The columns were removed by writing a new table under the file name “JL.phen”
-	write.table(phen, file = “JL.phen”, row.names = FALSE, col.names = FALSE, quote = FALSE)
+	write.table(Phen, file = “JL.phen”, row.names = FALSE, col.names = FALSE, quote = FALSE)
 
 #Files are now ready for GWAS with POP_filtered files
 
