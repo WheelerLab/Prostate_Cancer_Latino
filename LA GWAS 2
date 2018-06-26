@@ -42,8 +42,40 @@
 #Found in: /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$
     mv POP* /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/
     
+#Now going to test the GWAS with the PC Covariates on chr 21 to see if it runs
+    mkdir /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files
+    
+    plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr21 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_21
+    
+    #It worked!
+    
+    
 #Now we can run a bash to have all the chromosomes run at the same time. 
-#I made one previously, but it needs --covar added to it.
+  
+  nano Script-to-run-GWAS:
+  
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr1 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_1
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr2 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_2
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr3 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_3
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr4 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_4
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr5 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_5
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr6 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_6
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr7 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_7
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr8 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_8
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr9 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_9
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr10 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_10
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr11 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_11
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr12 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_12
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr13 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_13
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr14 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_14
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr15 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_15
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr16 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_16
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr17 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_17
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr18 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_18
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr19 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_19
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr20 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_20
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr21 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_21
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr22 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_22
 
-  cp /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run/bash_for_linear_files_allchr /home/jack/px_prostate_cancer_GWAS_Run_2/
 
+ 
