@@ -35,18 +35,15 @@
     0 231002191 1...
 
 #Running the GWAS
-  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ plink --covar PCA.eigenvec --adjust --logistic --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out GWAS
-    PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
-    (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
-    Logging to GWAS.log.
-    Options in effect:
-      --adjust
-      --allow-no-sex
-      --covar PCA.eigenvec
-      --logistic
-      --out GWAS
-      --pheno PhenTemp.header
-      --pheno-name ProCan
+#First we need to get the old Genotype files we used from the previous GWAS.
+    cd /home/jack/px_prostate_cancer_LA/GWAS_Run_2/
+      mkdir POP_filtered_files
+      
+#Found in: /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run$
+    mv POP* /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/
+    
+#Now we can run a bash to have all the chromosomes run at the same time. 
+#I made one previously, but it needs --covar added to it.
 
-    Error: No input dataset. #What??????????
-#It's not taking the covariates as input...
+  cp /home/jack/px_prostate_cancer_LA/ImpREDO/Imputed_files/GWAS_Run/bash_for_linear_files_allchr /home/jack/px_prostate_cancer_GWAS_Run_2/
+
