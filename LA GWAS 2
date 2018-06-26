@@ -1,0 +1,52 @@
+6.26.18
+
+#This file is for running the GWAS with PC Covariates for the Latino cohort.
+
+#Check for all needed files
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ ls
+    GWAS.1.log  GWAS.log  PCA.eigenval  PCA.eigenvec  PCA.log  PhenTemp.header
+
+#.eigenvec file should look like:
+
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ less -S PCA.eigenvec 
+
+    FID IID PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10
+    0 231000002 0.00879103 0.00423983 -0.0265322 0.0136869 -0.0128268 0.00490188 0.00996755 -0.00552363 -0.00592863 0.01190
+    0 231000458 0.00729832 0.00137757 -0.0199343 0.00861346 -0.0104413 -0.0497315 0.0384973 -0.00518138 0.00713359 0.021835
+    0 231000471 0.00397837 -0.00621793 0.00118469 0.00948241 0.018149 0.00413723 0.0139382 -0.0420487 0.0170981 0.00108372
+    0 231000477 0.00879632 -0.00339653 -0.0118774 -0.00173417 0.0102228 -0.0125755 0.0041675 -0.0127587 -0.015499 -0.021288
+    0 231000883 0.0043986 -0.00293621 -0.00741145 0.00146647 0.00729037 -0.0133314 0.0136808 0.0132728 0.00444564 0.0254173
+    0 231000905 0.00975082 0.00296624 -0.0287834 0.0034...
+
+#Phenotype file should look like:
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ less -S PhenTemp.header 
+
+    FID IID ProCan 
+    0 231000471 1
+    0 231000883 2
+    0 231000905 1
+    0 231001018 2
+    0 231001106 1
+    0 231001247 1
+    0 231001329 1
+    0 231001903 1
+    0 231002008 2
+    0 231002186 1
+    0 231002191 1...
+
+#Running the GWAS
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ plink --covar PCA.eigenvec --adjust --logistic --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out GWAS
+    PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+    (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+    Logging to GWAS.log.
+    Options in effect:
+      --adjust
+      --allow-no-sex
+      --covar PCA.eigenvec
+      --logistic
+      --out GWAS
+      --pheno PhenTemp.header
+      --pheno-name ProCan
+
+    Error: No input dataset. #What??????????
+#It's not taking the covariates as input...
