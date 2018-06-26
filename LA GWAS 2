@@ -77,5 +77,11 @@
       plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr21 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_21
       plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr22 --covar PCA.eigenvec --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_22
 
+  #Time to run it
+      nohup bash Script-to-run-GWAS &
+      
+      
+6.27.18
 
- 
+
+
