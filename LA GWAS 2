@@ -50,7 +50,7 @@
     #It worked!
     
     
-#Now we can run a bash to have all the chromosomes run at the same time. 
+#Now we can run nohup to have all the chromosomes run at the same time. 
   
   nano Script-to-run-GWAS:
   
