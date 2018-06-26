@@ -109,4 +109,8 @@
     jack@wheelerlab1:~/px_prostate_cancer_LA/Post-PCA$ ls
         PCA.eigenval  PCA.eigenvec  PCA.log
 
-    
+#Files moved to /home/jack/px_prostate_cancer_LA/GWAS_Run_2
+    jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ ls
+        GWAS.1.log  GWAS.log  PCA.eigenval  PCA.eigenvec  PCA.log  PhenTemp.header
+
+#GWAS steps run next in file "LA GWAS 2"
