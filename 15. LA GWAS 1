@@ -1,4 +1,6 @@
 NOTE: As of 6/12/18, there needs to be configuration with PC Covariates before GWAS can be run properly.
+      These files were used to run the GWAS without these limits.
+      "LA GWAS 2" is the file holding the proper GWAS.
       Regardless, here are the steps for the GWAS.
 
 
