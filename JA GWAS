@@ -177,3 +177,7 @@
 5/30/18
     #Still need to figure out why data isn't plotting, otherwise, moving onto African American cohort
     
+6.27.18
+    #This file is for running GWAS for the Japanese cohort with PC Covariate specification.
+    #Most files found in: /home/jack/Mohammed's_files/JA/
+
