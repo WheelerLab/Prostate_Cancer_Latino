@@ -1,0 +1,62 @@
+6.27.18
+    #This file is for running GWAS for the Japanese cohort with PC Covariate specification.
+    #Most QC, Imputed, and formatted files found in: /home/jack/Mohammed's_files/JA/
+    
+    #Testing chr21 filtered file for GWAS to see if I prepped it correctly
+    
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr21 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS
+    
+    #Output correct GWAS files, going to run it on the rest of the chromosomes
+    
+    jack@wheelerlab1:~/Mohammed_files/JA$ nano Script-to-run-GWAS
+
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr1 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.1
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr2 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.2
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr3 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.3
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr4 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.4
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr5 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.5
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr6 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.6
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr7 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.7
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr8 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.8
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr9 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.9
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr10 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.10
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr11 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.11
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr12 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.12
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr13 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.13
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr14 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.14
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr15 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.15
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr16 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.16
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr17 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.17
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr18 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.18
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr19 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.19
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr20 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.20
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr21 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.21
+            plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr22 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.22
+
+    
+    #All files output to /home/jack/Mohammed_files/JA/Post-GWAS-files
+    #The next step is to combine all the assoc.logistic files WITHOUT headers
+    #Concatinate all the .logistic files into one
+            cat GWAS.*.assoc.logistic > GWAS.phen.all.assoc.logistic
+    
+    #Take the header of the chromosome 1 file (can get it from any chromosome since they're all the same)
+            head -n 1 GWAS.1.assoc.logistic > header
+            
+            less -S header
+             CHR           SNP         BP   A1       TEST    NMISS         OR         STAT            P 
+             
+            grep -v CHR GWAS.all.assoc.logistic > gwasallnohead
+        
+        #Concatinate into one file INCLUDING header
+            cat header gwasallnohead > GWAS.all.assoc.logistic
+    
+        #Concatinated file written as GWAS.all.assoc.logistic
+        
+        #Plotting in RStudio:
+            > JA_GWASdat <- read.table("~/Mohammed_files/JA/Post-GWAS-files/GWAS.all.assoc.logistic", header = T)
+            > source('/home/jack/Mohammed_files/JA/Post-GWAS-files/qqman.r')
+            > png(filename = "JA_qqplot.png", res = 100)
+            > qq(JA_GWASdat$P)
+            
+            
+            
