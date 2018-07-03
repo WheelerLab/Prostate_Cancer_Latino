@@ -2,13 +2,13 @@
     #This file is for running GWAS for the Japanese cohort with PC Covariate specification.
     #Most QC, Imputed, and formatted files found in: /home/jack/Mohammed's_files/JA/
     
-    #Testing chr21 filtered file for GWAS to see if I prepped it correctly
+    #Testing chr21 filtered file for GWAS to see if I prepped it correctly.
     
             plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr21 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS
     
-    #Output correct GWAS files, going to run it on the rest of the chromosomes
+    #Output correct GWAS files, going to run it on the rest of the chromosomes.
     
-    jack@wheelerlab1:~/Mohammed_files/JA$ nano Script-to-run-GWAS
+        jack@wheelerlab1:~/Mohammed_files/JA$ nano Script-to-run-GWAS
 
             plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr1 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.1
             plink --bfile /home/jack/Mohammed_files/JA/POP_filtered_chr2 --covar /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec --logistic --adjust --pheno /home/jack/Mohammed_files/JA/JA_PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/Mohammed_files/JA/Post-GWAS-files/GWAS.2
@@ -35,8 +35,8 @@
 
     
     #All files output to /home/jack/Mohammed_files/JA/Post-GWAS-files
-    #The next step is to combine all the assoc.logistic files WITHOUT headers
-    #Concatinate all the .logistic files into one
+    #The next step is to combine all the assoc.logistic files WITHOUT headers - for Plotting
+    #Concatinate all the .logistic files
             cat GWAS.*.assoc.logistic > GWAS.phen.all.assoc.logistic
     
     #Take the header of the chromosome 1 file (can get it from any chromosome since they're all the same)
@@ -53,10 +53,16 @@
         #Concatinated file written as GWAS.all.assoc.logistic
         
         #Plotting in RStudio:
+            #QQ Plot:
             > JA_GWASdat <- read.table("~/Mohammed_files/JA/Post-GWAS-files/GWAS.all.assoc.logistic", header = T)
             > source('/home/jack/Mohammed_files/JA/Post-GWAS-files/qqman.r')
             > png(filename = "JA_qqplot.png", res = 100)
             > qq(JA_GWASdat$P)
             
-            
-            
+                      
+            #Manhattan Plot:
+            > png(filename = "JA_manplot.png", res = 100)
+            > manhattan(JA_GWASdat)
+            > dev.off()
+
+
