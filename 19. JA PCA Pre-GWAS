@@ -16,3 +16,13 @@ NOTE: this directory was clarified by Mohammed as safe to use for QC files - jus
             PCA.eigenval  PCA.eigenvec  PCA.log
         #Now we have the eigenvec file for GWAS!
 
+
+
+7.12.18
+
+#NOTE: Make sure that there are no HAPMAP values at the bottom of these .eigenvec files!
+        #It will show N/A for IID values if there are any HAPMAP values - delete these rows
+        #Rows deleted and renamed
+        
+        jack@wheelerlab1:~/Mohammed_files/AA/Post-PCA$ ls
+         PCA1.eigenval  PCA1.eigenvec  PCA1.log
