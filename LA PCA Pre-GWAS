@@ -57,17 +57,20 @@
           Pruning complete.  22525 of 60596 variants removed.
           Marker lists written to QC6e1.prune.in and QC6e1.prune.out .
 
-#Now make bbf files
-    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC6d1 --make-bed --out QC7
+#Now make bbf files from the .ped and .map files:
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --file QC6e1 --make-bed --out QC7
         PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
         (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
         Logging to QC7.log.
         Options in effect:
-          --bfile QC6d1
+          --file QC6e1
           --make-bed
           --out QC7
 
         64070 MB RAM detected; reserving 32035 MB for main workspace.
+        .ped scan complete (for binary autoconversion).
+        Performing single-pass .bed write (60596 variants, 2316 people).
+        --file: QC7-temporary.bed + QC7-temporary.bim + QC7-temporary.fam written.
         60596 variants loaded from .bim file.
         2316 people (2122 males, 194 females) loaded from .fam.
         391 phenotype values loaded from .fam.
@@ -80,8 +83,85 @@
         are missing.)
         --make-bed to QC7.bed + QC7.bim + QC7.fam ... done.
 
-#Now run the PCA in Plink
-    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC7 --pca 10 header --out /home/jack/px_prostate_cancer_LA/Post-PCA/PCA
+
+**CRITICAL STEP**
+#Remove the HAPMAP still within the data!
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ grep -v NA QC7.fam > QC8.txt 
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ l
+        QC6d1.bed  QC6d1.fam  QC6e1.log  QC6e1.ped       QC6e1.prune.out  QC71.bed  QC71.fam  QC8.txt
+        QC6d1.bim  QC6d1.log  QC6e1.map  QC6e1.prune.in  QC6e2.log        QC71.bim  QC71.log
+    
+    
+
+    #BUT QC8.fam still has HAPMAP data, so we use the --keep command to specify
+    
+        jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC7 --keep QC8.txt --make-bed --out QC8
+            PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+            (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+            Logging to QC8.log.
+            Options in effect:
+              --bfile QC7
+              --keep QC8.txt
+              --make-bed
+              --out QC8
+
+            64070 MB RAM detected; reserving 32035 MB for main workspace.
+            60596 variants loaded from .bim file.
+            2316 people (2122 males, 194 females) loaded from .fam.
+            391 phenotype values loaded from .fam.
+            --keep: 1925 people remaining.
+            Using 1 thread (no multithreaded calculations invoked).
+            Before main variant filters, 1925 founders and 0 nonfounders present.
+            Calculating allele frequencies... done.
+            Total genotyping rate in remaining samples is 0.999455.
+            60596 variants and 1925 people pass filters and QC.
+            Note: No phenotypes present.
+            --make-bed to QC8.bed + QC8.bim + QC8.fam ... done.
+            jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ less -S QC8.fam
+
+        
+        jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ l
+        QC6d1.bed  QC6d1.fam  QC6e1.log  QC6e1.ped       QC6e1.prune.out  QC7.bed  QC7.fam  QC8.bim  QC8.log
+        QC6d1.bim  QC6d1.log  QC6e1.map  QC6e1.prune.in  QC6e2.log        QC7.bim  QC7.log  QC8.bed   QC8.fam
+        
+    #Check the .fam file for any NA HAPMAP data:
+        jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ less -S QC8.fam 
+                0 231000002 0 0 1 -9
+                0 231000458 0 0 1 -9
+                0 231000471 0 0 1 -9
+                0 231000477 0 0 1 -9
+                0 231000883 0 0 1 -9
+                0 231000905 0 0 1 -9
+                0 231000927 0 0 1 -9
+                0 231001018 0 0 1 -9
+                0 231001091 0 0 1 -9
+                0 231001105 0 0 1 -9
+                0 231001106 0 0 1 -9
+                0 231001247 0 0 1 -9
+                0 231001329 0 0 1 -9
+                0 231001480 0 0 1 -9
+                0 231001535 0 0 1 -9
+                0 231001714 0 0 1 -9
+                0 231001764 0 0 1 -9
+                0 231001809 0 0 1 -9
+                0 231001827 0 0 1 -9
+                0 231001903 0 0 1 -9
+                0 231001988 0 0 1 -9
+                0 231002008 0 0 1 -9
+                0 231002033 0 0 1 -9
+                0 231002186 0 0 1 -9
+                0 231002191 0 0 1 -9
+                0 231002218 0 0 1 -9
+                0 231002243 0 0 1 -9
+                0 231002262 0 0 1 -9
+                0 231002309 0 0 1 -9
+                0 231002644 0 0 1 -9
+                0 231002806 0 0 1 -9
+                0 231002926 0 0 1 -9...
+
+    
+#Now run the PCA in Plink:
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-QC_files$ plink --bfile QC71 --pca 10 header --out /home/jack/px_prostate_cancer_LA/PCA-files/PCA
         PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
         (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
         Logging to /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.log.
@@ -106,7 +186,7 @@
         and /home/jack/px_prostate_cancer_LA/Post-PCA/PCA.eigenvec .
 
 #Check for files:
-    jack@wheelerlab1:~/px_prostate_cancer_LA/Post-PCA$ ls
+    jack@wheelerlab1:~/px_prostate_cancer_LA/PCA-files$ ls
         PCA.eigenval  PCA.eigenvec  PCA.log
 
 #Files moved to /home/jack/px_prostate_cancer_LA/GWAS_Run_2
