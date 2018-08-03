@@ -57,12 +57,12 @@
             > JA_GWASdat <- read.table("~/Mohammed_files/JA/Post-GWAS-files/GWAS.all.assoc.logistic", header = T)
             > source('/home/jack/Mohammed_files/JA/Post-GWAS-files/qqman.r')
             > png(filename = "/home/jack/Mohammed_files/JA/Post-GWAS-files/JA_qqplot.png", res = 100)
-            > qq(JA_GWASdat$P, main = "JA QQ Plot)
+            > qq(JA_GWASdat$P, main = "JA QQ Plot")
             
                       
             #Manhattan Plot:
             > png(filename = "/home/jack/Mohammed_files/JA/Post-GWAS-files/JA_manplot.png", res = 100)
-            > manhattan(JA_GWASdat)
+            > manhattan(JA_GWASdat, main = "JA ManPlot")
             > dev.off()
 
 
