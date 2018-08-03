@@ -56,35 +56,13 @@
             #QQ Plot:
             > JA_GWASdat <- read.table("~/Mohammed_files/JA/Post-GWAS-files/GWAS.all.assoc.logistic", header = T)
             > source('/home/jack/Mohammed_files/JA/Post-GWAS-files/qqman.r')
-            > png(filename = "JA_qqplot.png", res = 100)
+            > png(filename = "/home/jack/Mohammed_files/JA/Post-GWAS-files/JA_qqplot.png", res = 100)
             > qq(JA_GWASdat$P)
             
                       
             #Manhattan Plot:
-            > png(filename = "JA_manplot.png", res = 100)
+            > png(filename = "/home/jack/Mohammed_files/JA/Post-GWAS-files/JA_manplot.png", res = 100)
             > manhattan(JA_GWASdat)
             > dev.off()
 
 
-7.3.18
-    #Attempting to make Screeplot of PC1-PC3 against each other:
-        #Having trouble with documentation and Standard Deviation output that supposedly should have come from PCA.
-        #If not, I can get the sd's of each PC easily - but how that applies to the screeplot command, I don't know yet.
-        #Made a copy of the PCA.eigenvec file and converted it to a .csv for manipulation.
-        #Getting rid of PC4-PC10 since they won't be plotted
-        
-            > PCA2 <- PCA
-            > PCA2$PC10 <- NULL
-            > PCA2$PC9 <- NULL
-            > PCA2$PC8 <- NULL
-            > PCA2$PC7 <- NULL
-            > PCA2$PC6 <- NULL
-            > PCA2$PC5 <- NULL
-            > PCA2$PC4 <- NULL
-        
-        #Now I have an .eigenvec file to be manipulated for just the 3 PC's.
-            
-        
-        
-   
-   
