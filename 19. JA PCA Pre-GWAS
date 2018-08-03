@@ -4,25 +4,125 @@ NOTE: this directory was clarified by Mohammed as safe to use for QC files - jus
         jack@wheelerlab1:/home/mohammed/px_prostate_cancer_AA$ cp QC6d1.fam /home/jack/Mohammed_files/AA/My_QC_files/
 
     #The next step in QC was to prune the data, so I did just that:
-        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC6d1 --indep-pairwise 50 5 0.3 --recode --out QC7
+        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC6d1 --indep-pairwise 50 5 0.3 --recode --out QC6e1
         
     #Then I made my bfiles:
-        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC6d1 --make-bed --out QC7
+        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC6e1 --make-bed --out QC7
+            PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+            (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+            Logging to QC7.log.
+            Options in effect:
+              --file QC6e1
+              --make-bed
+              --out QC7
+
+            64070 MB RAM detected; reserving 32035 MB for main workspace.
+            .ped scan complete (for binary autoconversion).
+            Performing single-pass .bed write (51506 variants, 2158 people).
+            --file: QC7-temporary.bed + QC7-temporary.bim + QC7-temporary.fam written.
+            51506 variants loaded from .bim file.
+            2158 people (1964 males, 194 females) loaded from .fam.
+            391 phenotype values loaded from .fam.
+            Using 1 thread (no multithreaded calculations invoked).
+            Before main variant filters, 2158 founders and 0 nonfounders present.
+            Calculating allele frequencies... done.
+            Total genotyping rate is 0.999202.
+            51506 variants and 2158 people pass filters and QC.
+            Among remaining phenotypes, 0 are cases and 391 are controls.  (1767 phenotypes
+            are missing.)
+            --make-bed to QC7.bed + QC7.bim + QC7.fam ... done.
+   
+**CRITICAL STEP**  
+    #NOTE: Make sure that there are no HAPMAP values at the bottom of these .eigenvec files!
+    #It will show N/A for IID values if there are any HAPMAP values.
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ grep -v NA QC7.fam > QC8.txt
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ l
+        QC6d1.bed  QC6d1.fam  QC6e1.map  QC6e1.prune.in   QC7.bed  QC7.fam  QC8.txt
+        QC6d1.bim  QC6e1.log  QC6e1.ped  QC6e1.prune.out  QC7.bim  QC7.log
+
+    #BUT QC8.fam still has HAPMAP data, so we use the --keep command to specify
     
-    #Run the PCA
-        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC7 --pca 10 header --out /home/jack/Mohammed_files/AA/Post-PCA/PCA
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ plink --bfile QC7 --keep QC8.txt --make-bed --out QC8
+            PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+            (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+            Logging to QC8.log.
+            Options in effect:
+              --bfile QC7
+              --keep QC8.txt
+              --make-bed
+              --out QC8
+
+            64070 MB RAM detected; reserving 32035 MB for main workspace.
+            51506 variants loaded from .bim file.
+            2158 people (1964 males, 194 females) loaded from .fam.
+            391 phenotype values loaded from .fam.
+            --keep: 1767 people remaining.
+            Using 1 thread (no multithreaded calculations invoked).
+            Before main variant filters, 1767 founders and 0 nonfounders present.
+            Calculating allele frequencies... done.
+            Total genotyping rate in remaining samples is 0.999583.
+            51506 variants and 1767 people pass filters and QC.
+            Note: No phenotypes present.
+            --make-bed to QC8.bed + QC8.bim + QC8.fam ... done.
     
-        jack@wheelerlab1:~/Mohammed_files/AA/Post-PCA$ ls
-            PCA.eigenval  PCA.eigenvec  PCA.log
-        #Now we have the eigenvec file for GWAS!
+    #Check the .fam file for any NA HAPMAP data:
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ less -S QC8.fam 
+            0 231000062 0 0 1 -9
+            0 231000102 0 0 1 -9
+            0 231000288 0 0 1 -9
+            0 231000340 0 0 1 -9
+            0 231000522 0 0 1 -9
+            0 231000621 0 0 1 -9
+            0 231000656 0 0 1 -9
+            0 231000710 0 0 1 -9
+            0 231000735 0 0 1 -9
+            0 231000746 0 0 1 -9
+            0 231000940 0 0 1 -9
+            0 231000994 0 0 1 -9
+            0 231001038 0 0 1 -9
+            0 231001191 0 0 1 -9
+            0 231001211 0 0 1 -9
+            0 231001438 0 0 1 -9
+            0 231001542 0 0 1 -9
+            0 231001558 0 0 1 -9
+            0 231001664 0 0 1 -9
+            0 231001835 0 0 1 -9
+            0 231001837 0 0 1 -9
+            0 231001949 0 0 1 -9
+            0 231002324 0 0 1 -9
+            0 231002350 0 0 1 -9
+            0 231002359 0 0 1 -9
+            0 231002383 0 0 1 -9
+            0 231002395 0 0 1 -9
+            0 231002420 0 0 1 -9
+            0 231002453 0 0 1 -9
+            0 231002507 0 0 1 -9
+            0 231002704 0 0 1 -9
+            0 231002950 0 0 1 -9...
 
-
-
-7.12.18
-
-#NOTE: Make sure that there are no HAPMAP values at the bottom of these .eigenvec files!
-        #It will show N/A for IID values if there are any HAPMAP values - delete these rows
-        #Rows deleted and renamed
         
-        jack@wheelerlab1:~/Mohammed_files/AA/Post-PCA$ ls
-         PCA1.eigenval  PCA1.eigenvec  PCA1.log
+    #Run the PCA
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ plink --bfile QC8 --pca 10 header --out /home/jack/Mohammed_files/JA/Post-PCA/PCA
+            PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+            (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+            Logging to /home/jack/Mohammed_files/JA/Post-PCA/PCA.log.
+            Options in effect:
+              --bfile QC8
+              --out /home/jack/Mohammed_files/JA/Post-PCA/PCA
+              --pca 10 header
+
+            64070 MB RAM detected; reserving 32035 MB for main workspace.
+            51506 variants loaded from .bim file.
+            1767 people (1767 males, 0 females) loaded from .fam.
+            Using up to 11 threads (change this with --threads).
+            Before main variant filters, 1767 founders and 0 nonfounders present.
+            Calculating allele frequencies... done.
+            Total genotyping rate is 0.999583.
+            51506 variants and 1767 people pass filters and QC.
+            Note: No phenotypes present.
+            Relationship matrix calculation complete.
+            --pca: Results saved to /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenval and
+            /home/jack/Mohammed_files/JA/Post-PCA/PCA.eigenvec .
+
+
+    #Next steps found in 20. JA GWAS - PC Covariates
