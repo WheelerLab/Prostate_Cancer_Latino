@@ -35,14 +35,14 @@ NOTE: this directory was clarified by Mohammed as safe to use for QC files - jus
 **CRITICAL STEP**  
     #NOTE: Make sure that there are no HAPMAP values at the bottom of these .eigenvec files!
     #It will show N/A for IID values if there are any HAPMAP values.
-        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ grep -v NA QC7.fam > QC8.txt
-        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ l
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ grep ^0 QC7.fam > QC8.txt
+        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ ls
         QC6d1.bed  QC6d1.fam  QC6e1.map  QC6e1.prune.in   QC7.bed  QC7.fam  QC8.txt
         QC6d1.bim  QC6e1.log  QC6e1.ped  QC6e1.prune.out  QC7.bim  QC7.log
 
     #BUT QC8.fam still has HAPMAP data, so we use the --keep command to specify
     
-        jack@wheelerlab1:~/Mohammed_files/JA/QC_files$ plink --bfile QC7 --keep QC8.txt --make-bed --out QC8
+        jack@wheelerlab1:~/Mohammed_files/AA/My_QC_files$ plink --bfile QC7 --keep QC8.txt --make-bed --out QC8
             PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
             (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
             Logging to QC8.log.
@@ -53,15 +53,15 @@ NOTE: this directory was clarified by Mohammed as safe to use for QC files - jus
               --out QC8
 
             64070 MB RAM detected; reserving 32035 MB for main workspace.
-            51506 variants loaded from .bim file.
-            2158 people (1964 males, 194 females) loaded from .fam.
+            195257 variants loaded from .bim file.
+            4732 people (4533 males, 199 females) loaded from .fam.
             391 phenotype values loaded from .fam.
-            --keep: 1767 people remaining.
+            --keep: 4298 people remaining.
             Using 1 thread (no multithreaded calculations invoked).
-            Before main variant filters, 1767 founders and 0 nonfounders present.
+            Before main variant filters, 4298 founders and 0 nonfounders present.
             Calculating allele frequencies... done.
-            Total genotyping rate in remaining samples is 0.999583.
-            51506 variants and 1767 people pass filters and QC.
+            Total genotyping rate in remaining samples is 0.999328.
+            195257 variants and 4298 people pass filters and QC.
             Note: No phenotypes present.
             --make-bed to QC8.bed + QC8.bim + QC8.fam ... done.
     
