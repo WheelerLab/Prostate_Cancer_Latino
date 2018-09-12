@@ -31,16 +31,6 @@ nano for_Loop_bash
 #I need to use vcftools to filter .dose.vcf.gz files downloaded from Michigan Imputation by MAF of .01 and r^2 of 0.8
 #vcftools.sourceforge.net has good vcftools commands for allele implementations
 
-2/15/18
-#Could not find how to filter MAF and r^2 with vcftools, so converted to plink and then I will filter
-#To filter by MAF 0.01:
-plink --bfile chr_# --maf 0.01 –-make-bed –-out chr_#
-#***Note***: If the same filename is used for the out file in this step, the unfiltered input file will now have a ~ at the end of it. Delete the ~input files, keep the new ones.
-
-#To filter by r^2 0.8:
-plink --bfile chr_# --r2 0.8 –-make-bed –-out chr_#
-#Error invalid --r/--r2 parameter ‘0.8’ 
-#Lauren sent: --qual-threshold 0.8 to use, might be better suited for this
 
 2/16/18
 #Found Aly’s old post Imputation filtering and conversion. Steps 2 and 4 (disregard HW equilibrium part) will be used for MAF and r^2 filtering: https://github.com/abadalamenti1/Population_Expression_Prediction/blob/ef5160cbe7e1c5bdb613acf48b30dbba0ca4bcb7/B)_Steps_After_Imputation 
