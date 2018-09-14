@@ -23,14 +23,6 @@ nano for_Loop_bash
 #Check to make sure chr1 (or whichever is first) is within the new UMich_dosages directory, and it should be going.
 	nohup bash for_Loop_bash &
 
-2/8/18
-#Once I had one chromosome to test, I tried converting it to a bed file.
-#Converts dosage txt.gz file to .bed
-	zcat file.txt.gz | sed 's/:/\t/g' | sed 's/-/\t/g' > file.bed
-#Above step incorrect, file formed from this command was deleted
-#I need to use vcftools to filter .dose.vcf.gz files downloaded from Michigan Imputation by MAF of .01 and r^2 of 0.8
-#vcftools.sourceforge.net has good vcftools commands for allele implementations
-
 
 2/16/18
 #Found Aly’s old post Imputation filtering and conversion. Steps 2 and 4 (disregard HW equilibrium part) will be used for MAF and r^2 filtering: https://github.com/abadalamenti1/Population_Expression_Prediction/blob/ef5160cbe7e1c5bdb613acf48b30dbba0ca4bcb7/B)_Steps_After_Imputation 
