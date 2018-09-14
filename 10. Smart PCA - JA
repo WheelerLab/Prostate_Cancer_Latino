@@ -1,3 +1,5 @@
+NOTE: SmartPCA is no longer used now that Plink can run PCA analysis. This directory is just saved as a record of what was done.
+
 10. Smart PCA - LA
 
 smartpca -p /home/jack/px_prostate_cancer_JA/QC6f1.par
