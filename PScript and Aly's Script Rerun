@@ -1,0 +1,6 @@
+9/20/18
+
+#I will be rerunning the python script (PrediXcan Format) and Aly's script (Plink format) for post-imp files
+#Both will output files that should be filtered by MAF and r^2
+#Have to be sure the SNP count remains the same for each once finished
+
