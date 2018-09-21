@@ -4,3 +4,20 @@
 #Both will output files that should be filtered by MAF and r^2
 #Have to be sure the SNP count remains the same for each once finished
 
+  #Making new directory for PScript files and Aly's Script files
+  ~/px_prostate_cancer_LA/ImpREDO/Imputed_files$ mkdir Post-PScript
+  ~/px_prostate_cancer_LA/ImpREDO/Imputed_files$ mkdir Post-MAF-Aly
+   ~/px_prostate_cancer_LA/ImpREDO/Imputed_files$ mkdir Post-R2-Aly
+  
+  
+  #First I am running the PScript which outputs to "~/px_prostate_cancer_LA/ImpREDO/Imputed_files/UMich_dosages"
+  
+      nohup bash Loop_For_Running_PScript
+      
+  #Then I ran files for R^2
+      nohup bash R^2_Alys_Format
+      
+  #Then I ran files for MAF
+      nohup bash MAF_Aly's_Format
+      
+  #Waiting on files to finish for next step
