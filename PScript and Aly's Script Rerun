@@ -25,4 +25,15 @@
   #Then I ran files for MAF
       nohup bash MAF_Aly's_Format
       
-  #Waiting on files to finish for next step
+
+9/21/18
+
+#LA:
+  #PScript filter complete
+  #R2 complete, need to gzip the output files before they can go through MAF filter
+  #MAF will be run once finished gzipping
+  
+#JA:
+  #Running Pscript currently
+  #R2 and MAF finished
+  
