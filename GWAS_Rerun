@@ -1,9 +1,113 @@
 10/9/18
 
+#Files can be found in:
+  /home/jack/px_prostate_cancer_LA/GWAS_Run_2/
+  or
+  /homes/jack/Mohammed_files/JA/
 #Running GWAS this week with set parameters:
   LA - only 5 PC's
   JA - as of now, 3 PC's. Going to double check if this is right.
   
 
 10/11/18
+  Running GWAS for LA cohort
+  cd  /home/jack/px_prostate_cancer_LA/GWAS_Run_2/
   
+  #This file is for running the GWAS with PC Covariates for the Latino cohort.
+
+#Check for all needed files
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ ls
+    PCA.eigenval  PCA.eigenvec  PCA.log  PhenTemp.header Script-to-run-GWAS
+
+#.eigenvec file should look like:
+
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ less -S PCA.eigenvec 
+
+    FID IID PC1 PC2 PC3 PC4 PC5 PC6 PC7 PC8 PC9 PC10
+    0 231000002 0.00879103 0.00423983 -0.0265322 0.0136869 -0.0128268 0.00490188 0.00996755 -0.00552363 -0.00592863 0.01190
+    0 231000458 0.00729832 0.00137757 -0.0199343 0.00861346 -0.0104413 -0.0497315 0.0384973 -0.00518138 0.00713359 0.021835
+    0 231000471 0.00397837 -0.00621793 0.00118469 0.00948241 0.018149 0.00413723 0.0139382 -0.0420487 0.0170981 0.00108372
+    0 231000477 0.00879632 -0.00339653 -0.0118774 -0.00173417 0.0102228 -0.0125755 0.0041675 -0.0127587 -0.015499 -0.021288
+    0 231000883 0.0043986 -0.00293621 -0.00741145 0.00146647 0.00729037 -0.0133314 0.0136808 0.0132728 0.00444564 0.0254173
+    0 231000905 0.00975082 0.00296624 -0.0287834 0.0034...
+
+#Phenotype file should look like:
+  jack@wheelerlab1:~/px_prostate_cancer_LA/GWAS_Run_2$ less -S PhenTemp.header 
+
+    FID IID ProCan 
+    0 231000471 1
+    0 231000883 2
+    0 231000905 1
+    0 231001018 2
+    0 231001106 1
+    0 231001247 1
+    0 231001329 1
+    0 231001903 1
+    0 231002008 2
+    0 231002186 1
+    0 231002191 1...
+  
+  nano Script-to-run-GWAS
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr1 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_1
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr2 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_2
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr3 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_3
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr4 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_4
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr5 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_5
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr6 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_6
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr7 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_7
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr8 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_8
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr9 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_9
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr10 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_10
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr11 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_12
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr12 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_12
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr13 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_13
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr14 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_14
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr15 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_15
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr16 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_16
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr17 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_17
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr18 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_18
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr19 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_19
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr20 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_20
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr21 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_21
+      plink --bfile /home/jack/px_prostate_cancer_LA/GWAS_Run_2/POP_filtered_files/POP_filtered_chr22 --covar PCA.eigenvec --covar-number 1-5 --logistic --adjust --pheno PhenTemp.header --allow-no-sex --pheno-name ProCan --out /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS_22
+
+  #Everything checks out, time to run it.
+    nohup bash Script-to-run-GWAS &
+    
+    #Checked, running - output to /home/jack/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/
+    #Took about 20 minutes
+    
+  #Formatting for R plotting
+    cat GWAS_*.assoc.logistic > GWAS_*.all.assoc.logistic
+    head -n 1 GWAS_1.assoc.logistic > header
+    grep -v CHR GWAS_.all.assoc.logistic > gwasallnohead
+    cat header gwasallnohead > GWAS.phen.all.assoc.logistic
+    wc -l GWAS.phen.all.assoc.logistic
+          36590899 GWAS.phen.all.assoc.logistic
+  
+  #Within R:
+    > LA_data <- read.table("~/px_prostate_cancer_LA/GWAS_Run_2/Post-GWAS-files/GWAS.phen.all.assoc.logistic", header = T)
+    > source('px_prostate_cancer_LA/GWAS_Run_2/qqman.r')
+    > png(filename = "/home/jack/px_prostate_cancer_LA/GWAS_Run_2/qqplot.png",res = 100)
+    > qq(LA_data$P)
+    > dev.off()
+    RStudioGD 
+            2 
+    > png(filename = "/home/jack/px_prostate_cancer_LA/GWAS_Run_2/manplot.png",res = 100)
+    > manhattan(LA_data)
+    > dev.off()
+    RStudioGD 
+            2 
+    #GWAS plotted in R - QQ plot still falls below the line, QQ and Manplot in Slack
+    #Need to figure out why it's not plotting above/along the line
+    
+    
+    
+    
+    
+    
+    
+JA:
+#Still going through final MAF filtering - should be done in a few hours - output to /home/jack/Mohammed_files/JA/
+
+
