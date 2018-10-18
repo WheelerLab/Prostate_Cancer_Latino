@@ -101,13 +101,24 @@
     #GWAS plotted in R - QQ plot still falls below the line, QQ and Manplot in Slack
     #Need to figure out why it's not plotting above/along the line
     
-    
-    
-    
-    
-    
-    
+      
 JA:
 #Still going through final MAF filtering - should be done in a few hours - output to /home/jack/Mohammed_files/JA/
+  #Complete
+  
+#Running GWAS
+  nohup bash Script-to-run-GWAS 
 
 
+10/18/18
+#GWAS complete - prepping for plotting
+  cat GWAS.*.assoc.logistic > GWAS.*.all.assoc.logistic
+  head -n 1 GWAS.1.assoc.logistic > header
+  grep -v CHR GWAS.all.assoc.logistic > gwasallnohead
+  cat header gwasallnohead > GWAS.phen.all.assoc.logistic
+  wc -l GWAS.phen.all.assoc.logistic 
+      26145897 GWAS.phen.all.assoc.logistic
+      
+      
+  #Plotting in R: - it went wrong, moving back to some other steps...
+    
