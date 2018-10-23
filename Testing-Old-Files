@@ -1,0 +1,33 @@
+Testing-Old-Files
+
+#This repo is strictly for figuring out why my GWAS is not working
+#I will be pulling SNPs from original Plink files and comparing them to both pre-PC files and post-GWAS files
+#Let's start by finding the old files
+
+#In /home/jack/
+  mkdir Testing-Old-Files
+  
+  sed -n -e '12,1066p' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c1.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.DS-CA-PUB-MDS.txt > /home/jack/Testing-Old-Files/test
+  sed -n -e '12,1725p' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c2.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.GRU-MDS.txt > /home/jack/Testing-Old-Files/test1
+  sed -n -e '12,1711p' /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/phs000306.v4.pht001911.v1.p1.c5.MEC_Prostate_Cancer_JALA_Subject_Phenotypes.HMB-PUB-MDS.txt > /home/jack/Testing-Old-Files/test2
+  cat test test1 test2 >> test3
+  
+  #Take data from test3 (the combined files) and turn them into columns – there should be 20
+  column -t test3 > test4
+  awk '{print NF}' test4 | sort -nu | tail -n 1
+      20
+  awk '{print > $4".txt"}' test4
+
+#This makes 2 files, J.txt and L.txt, in which J.txt has all rows with J in column 4
+#We have 2263 Japanese and 2206 Latino people in our cohort
+  wc -l J.txt 
+    2263 J.txt
+  wc -l L.txt 
+    2206 L.txt
+
+#Now we have to make the files into bed/bim/fam files. 
+#Problem is that the rows in L.txt and J.txt have different number of columns, so copy the first 4 columns (important ones) to another file. 
+  awk '{print $1,$2,$3,$4}' L.txt > LA.txt
+  awk '{print $1,$2,$3,$4}' J.txt > JA.txt
+    #So the 2 new files have the important first 4 columns from the original 2 files. 
+    
