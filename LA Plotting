@@ -1,8 +1,0 @@
-6.25.18
-
-#This file is intended for any plotting to be done just before GWAS with PC Covariates
-
-#Making Screeplots of PC1 vs. PC2, PC2 vs. PC3, and PC1 vs. PC3
-
-#PC1 vs. PC2
-    
