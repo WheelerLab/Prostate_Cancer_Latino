@@ -1,0 +1,8 @@
+QC Rerun
+
+10.30.18
+
+This file is for rerunning QC with Ryan's script.
+The goal of this rerun is to make sure Japanese and Latino filtering is done properly.
+Similar IBD, QQ, and PC plots will be made throughout the process to confirm that QC is working better than it previously did.
+
