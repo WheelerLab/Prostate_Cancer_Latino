@@ -6,6 +6,10 @@ This file is for rerunning QC with Ryan's script.
 The goal of this rerun is to make sure Japanese and Latino filtering is done properly.
 Similar IBD, QQ, and PC plots will be made throughout the process to confirm that QC is working better than it previously did.
 
+NOTE: ALL OLD FILES MOVED TO: /media/wheelerlab1/MyBook/jack_2018-09-21/
+  ls
+  Mohammed_files    px_prostate_cancer_LA
+
 #Making new QC directory
   cd /home/jack/
   mkdir QC_Redo
@@ -13,6 +17,140 @@ Similar IBD, QQ, and PC plots will be made throughout the process to confirm tha
   RUN A QQ ON POST-IMPUTATED DATA*********
   MAKE A GOOGLE SLIDE OF PRE-IMP AND POST-IMP WITH NO PC'S AND WITHOUT - 4 TOTAL
   
+  
+#Before we run QC, we need to merge the original files - found in /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/
+#The files are protected, so to merge I will use nano and save them to my directory:
+    nano JL_prostate_list
+#made a new file to merge the JL data
+    
+#WHEN INSIDE NANO - get the c2 and c5 file types, I will merge them with the c1 in the next steps
+    /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c2_subject_level.bed /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c2_subject_level.bim /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c2_subject_level.fam
+    /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c5_subject_level.bed /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c5_subject_level.bim /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c5_subject_level.fam
+#WHEN EXITING NANO
+   #Save to your own directory
+    /home/jack/JL_prostate_list 
+
+#IMPORTANT MERGING STEP
+plink --bfile /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c1_subject_level --merge-list JL_prostate_list --make-bed --out /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+    #This step takes the JL files and combines them
+    
+     plink --bfile /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c1_subject_level --merge-list JL_prostate_list --make-bed --out /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+(C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+Logging to /home/jack/GENEVA_MEC_ProstateCancer_JL_all.log.
+Options in effect:
+  --bfile /home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c1_subject_level
+  --make-bed
+  --merge-list JL_prostate_list
+  --out /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+
+        64070 MB RAM detected; reserving 32035 MB for main workspace.
+        Warning: Variants 'rs35023063' and 'cnvi0055655' have the same position.
+        Warning: Variants 'rs6680575' and 'cnvi0101756' have the same position.
+        Warning: Variants 'rs1051741' and '500301' have the same position.
+        37 more same-position warnings: see log file.
+        Performing single-pass merge (4353 people, 657366 variants).
+        Merged fileset written to /home/jack/GENEVA_MEC_ProstateCancer_JL_all-merge.bed
+        + /home/jack/GENEVA_MEC_ProstateCancer_JL_all-merge.bim +
+        /home/jack/GENEVA_MEC_ProstateCancer_JL_all-merge.fam .
+        657366 variants loaded from .bim file.
+        4353 people (4346 males, 7 females) loaded from .fam.
+        Using 1 thread (no multithreaded calculations invoked).
+        Before main variant filters, 4353 founders and 0 nonfounders present.
+        Calculating allele frequencies... done.
+        Warning: 11376 het. haploid genotypes present (see
+        /home/jack/GENEVA_MEC_ProstateCancer_JL_all.hh ); many commands treat these as
+        missing.
+        Total genotyping rate is 0.827991.
+        657366 variants and 4353 people pass filters and QC.
+        Note: No phenotypes present.
+        --make-bed to /home/jack/GENEVA_MEC_ProstateCancer_JL_all.bed +
+        /home/jack/GENEVA_MEC_ProstateCancer_JL_all.bim +
+        /home/jack/GENEVA_MEC_ProstateCancer_JL_all.fam ... done.
+
+#GENEVA files are now in the /home/jack/ directory
+    #Starting with 4353 people
+    wc -l GENEVA_MEC_ProstateCancer_JL_all.fam
+         4353 GENEVA_MEC_ProstateCancer_JL_all.fam
+    wc -l GENEVA_MEC_ProstateCancer_JL_all.bed
+        1621688 GENEVA_MEC_ProstateCancer_JL_all.bed
+    wc -l GENEVA_MEC_ProstateCancer_JL_all.bim
+        657366 GENEVA_MEC_ProstateCancer_JL_all.bim
+
+
+
+#Now we need to separate the Japanese and Latino phenotype files
+#This was done twice, both in the original Repo "Prostate_Cancer_Latino/Beginning Files/Separating JA and LA Files" and again recently
+#The end files are found in /home/jack/Testing-Old-Files/
+   cd /home/jack/Testing-Old-Files/
+   ls
+     JA_list.bed  JA_list.fam  JA_list.log        JA.txt  LA_list.bed  LA_list.fam  LA_list.log      LA.txt  test   test2  test4
+     JA_list.bim  JA_list.hh   japanese.list.txt  J.txt   LA_list.bim  LA_list.hh   latino.list.txt  L.txt   test1  test3
+
+   cp latino.list.txt* /home/jack/QC_Redo/
+   cp japanese.list.txt* /home/jack/QC_Redo/
+   
+   #Get rid of the Latino in the Japanese files:
+     plink --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all --keep latino.list.txt --make-bed --out /home/jack/QC_Redo/LA_list   
+        PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+              (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+              Logging to /home/jack/QC_Redo/LA_list.log.
+              Options in effect:
+                --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+                --keep latino.list.txt
+                --make-bed
+                --out /home/jack/QC_Redo/LA_list
+
+              64070 MB RAM detected; reserving 32035 MB for main workspace.
+              657366 variants loaded from .bim file.
+              4353 people (4346 males, 7 females) loaded from .fam.
+              --keep: 2081 people remaining.
+              Using 1 thread (no multithreaded calculations invoked).
+              Before main variant filters, 2081 founders and 0 nonfounders present.
+              Calculating allele frequencies... done.
+              Warning: 7878 het. haploid genotypes present (see /home/jack/QC_Redo/LA_list.hh
+              ); many commands treat these as missing.
+              Total genotyping rate in remaining samples is 0.827934.
+              657366 variants and 2081 people pass filters and QC.
+              Note: No phenotypes present.
+              --make-bed to /home/jack/QC_Redo/LA_list.bed + /home/jack/QC_Redo/LA_list.bim +
+              /home/jack/QC_Redo/LA_list.fam ... done.
+
+
+   #Get rid of the Japanese in the Latino files:
+    plink --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all --keep japanese.list.txt --make-bed --out /home/jack/QC_Redo/JA_list   PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
+              (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
+              Logging to /home/jack/QC_Redo/JA_list.log.
+              Options in effect:
+                --bfile /home/jack/GENEVA_MEC_ProstateCancer_JL_all
+                --keep japanese.list.txt
+                --make-bed
+                --out /home/jack/QC_Redo/JA_list
+
+              64070 MB RAM detected; reserving 32035 MB for main workspace.
+              657366 variants loaded from .bim file.
+              4353 people (4346 males, 7 females) loaded from .fam.
+              --keep: 1934 people remaining.
+              Using 1 thread (no multithreaded calculations invoked).
+              Before main variant filters, 1934 founders and 0 nonfounders present.
+              Calculating allele frequencies... done.
+              Warning: 3357 het. haploid genotypes present (see /home/jack/QC_Redo/JA_list.hh
+              ); many commands treat these as missing.
+              Total genotyping rate in remaining samples is 0.828028.
+              657366 variants and 1934 people pass filters and QC.
+              Note: No phenotypes present.
+              --make-bed to /home/jack/QC_Redo/JA_list.bed + /home/jack/QC_Redo/JA_list.bim +
+              /home/jack/QC_Redo/JA_list.fam ... done.
+
+    #BBF files made for JA and LA
+
+    #We have 1934 Japanese and 2081 Latino people in our cohorts
+
+
+
 #Pipeline for QC found in Ryan's Github: https://github.com/WheelerLab/gwasqc_pipeline/blob/master/shellscripts/01MissingnessFiltering
-#Changing Parameters of script and copying to another Github Repo: /WheelerLab/Prostate_Cancer_Latino/Redo/QC-Pipeline
+#Changing parameters of script and copying to another Github Repo: /WheelerLab/Prostate_Cancer_Latino/Redo/QC-Pipeline
+
+Running QC Pipeline:
+  
 
