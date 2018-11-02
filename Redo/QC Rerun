@@ -6,3 +6,13 @@ This file is for rerunning QC with Ryan's script.
 The goal of this rerun is to make sure Japanese and Latino filtering is done properly.
 Similar IBD, QQ, and PC plots will be made throughout the process to confirm that QC is working better than it previously did.
 
+#Making new QC directory
+  cd /home/jack/
+  mkdir QC_Redo
+  
+  RUN A QQ ON POST-IMPUTATED DATA*********
+  MAKE A GOOGLE SLIDE OF PRE-IMP AND POST-IMP WITH NO PC'S AND WITHOUT - 4 TOTAL
+  
+#Pipeline for QC found in Ryan's Github: https://github.com/WheelerLab/gwasqc_pipeline/blob/master/shellscripts/01MissingnessFiltering
+#Changing Parameters of script and copying to another Github Repo: /WheelerLab/Prostate_Cancer_Latino/Redo/QC-Pipeline
+
