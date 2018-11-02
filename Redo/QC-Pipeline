@@ -1,3 +1,4 @@
+11.2.18
 #Pipeline taken from Ryan's Repo: https://github.com/WheelerLab/gwasqc_pipeline/blob/master/shellscripts/01MissingnessFiltering
 
 
@@ -6,10 +7,10 @@
 PlinkPath=/usr/local/bin
 
 AutosomeDefault=False
-BfileDefault=/home/wheelerlab2/Data/MESA_dbGaP_55081/phg000071.v2.NHLBI_SHARE_MESA.genotype-calls-matrixfmt.c1/SHARE_MESA_c1
+BfileDefault=/home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c1_subject_level
 GenotypingThresholdDefault=0.01
 HWEpvalDefault=0.0001
-OutputDirDefault=~/QC
+OutputDirDefault=~/QC_Redo
 PrefilterDefault=none
 
 while :
