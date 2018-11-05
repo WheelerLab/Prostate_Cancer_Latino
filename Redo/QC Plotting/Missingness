@@ -1,0 +1,47 @@
+11.5.18
+
+R:
+
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> library(tidyr)
+> library(ggplot2)
+> library(argparse)
+> parser <- ArgumentParser()
+> parser$add_argument("-t", "--threshold", help="0.01", type="double", default=0.01)
+> parser$add_argument("--QCdir", help="/home/jack/QC_Redo/JA-QC-Output/")
+> args <- parser$parse_args()
+> "%&%" = function(a,b) paste (a,b,sep="")
+> percentage<-100*(1-args$threshold)
+> lmiss <- read.table(args$QCdir %&% "/missingness_hwe_steps/01initial_missingness.lmiss", header=T)
+Error in file(file, "rt") : cannot open the connection
+In addition: Warning message:
+In file(file, "rt") :
+  cannot open file '/missingness_hwe_steps/01initial_missingness.lmiss': No such file or directory
+> lmiss <- read.table(args$QCdir %&% "/home/jack/QC_Redo/JA-QC-Output/missingness_hwe_steps/01initial_missingness.lmiss", header=T)
+> imiss <- read.table(args$QCdir %&% "/home/jack/QC_Redo/JA-QC-Output/missingness_hwe_steps/03missingness_validation.imiss", header = T)
+> newlmiss <- read.table(args$QCdir %&% "/home/jack/QC_Redo/JA-QC-Output/missingness_hwe_steps/03missingness_validation.lmiss", header = T)
+> pdf(args$QCdir %&% "/home/jack/QC_Redo/JA-QC-Output/plots_stats/callRateDistributions.pdf")
+> hist(lmiss$F_MISS, main="Call rate distribution for SNPs before filtering")
+> hist(newlmiss$F_MISS, main="distributions for SNPs after removing SNPs call rate < " %&% percentage)
+> hist(imiss$F_MISS, main="distributions for individuals after removing SNPs call rate < " %&% percentage)
+> dev.off()
+null device 
+          1 
+> statsfile<- args$QCdir %&% "/home/jack/QC_Redo/JA-QC-Output/plots_stats/missingness.txt"
+> init<- "Initial number of SNPs is " %&% dim(lmiss)[1]
+> final<- paste("Number of SNPs after filtering with out call rates < ", percentage, " is ", dim(newlmiss)[1], sep="")
+> indiv<- "Number of individuals after filtering is " %&% dim(imiss)[1]
+> write(init, statsfile, append=T)
+> write(final, statsfile, append=T)
+> write(indiv, statsfile, append=T)
