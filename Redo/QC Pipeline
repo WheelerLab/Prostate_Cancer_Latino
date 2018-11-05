@@ -17,55 +17,55 @@ while :
 do
     case "$1" in
       -a | --autosome) #flag for initial filtering by autosome
-	        Autosome=True
-	        shift 1
-	        ;;
+                Autosome=True
+                shift 1
+                ;;
       -b | --bfile) #same as normal plink - Path to all files and the shared prefix
-	        BFile="$2"  
-	        shift 2
-	        ;;
+                BFile="$2"  
+                shift 2
+                ;;
       --bim) #/path/to/file.bim
-        	  BimFile="$2"
-	        shift 2
-	        ;;
+                  BimFile="$2"
+                shift 2
+                ;;
       --bed) #/path/to/file.bed
-      	  	BedFile="$2"
-	        shift 2
-	        ;;
+                BedFile="$2"
+                shift 2
+                ;;
       --fam) #/path/to/file.fam
-      	 	FamFile="$2"
-	        shift 2
-	        ;;
+                FamFile="$2"
+                shift 2
+                ;;
       -k | --keep) #list of individuals you would like to keep. mutually exclusive with remove
-      	  	KeepList="$2"
-	        Prefilter=keep
-		shift 2
-	        ;;
+                KeepList="$2"
+                Prefilter=keep
+                shift 2
+                ;;
       -g | --geno) #threshold to filter genotyping rate by
-      	  	GenotypingThreshold="$2"
-	        shift 2
-	        ;;
+                GenotypingThreshold="$2"
+                shift 2
+                ;;
       -h | --hwe) #threshold for filtering by hardy weinburg statistics
-      	  	HWEpval="$2"
-	        shift 2
-	        ;;
+                HWEpval="$2"
+                shift 2
+                ;;
       -o | --output) #directory where you'd like to send all your QC folders - will be folder hierarchy
-          	OutputDir="$2"
-	        shift 2
-	        ;;
+                OutputDir="$2"
+                shift 2
+                ;;
       -r | --remove) #list of individuals you would like to remove
-      	  	RemoveList="$2"
-		Prefilter=remove
-	        shift 2
-	        ;;
+                RemoveList="$2"
+                Prefilter=remove
+                shift 2
+                ;;
       -*) #unknown 
-      		echo "Error: Unknown option: $1" >&2
-	        exit 1
-	        ;;
+                echo "Error: Unknown option: $1" >&2
+                exit 1
+                ;;
       *)  # No more options
-         	shift
-	        break
-	        ;;
+                shift
+ break
+                ;;
      esac
 done
 
@@ -82,42 +82,48 @@ fi
 if [ ! -d "${OutputDir:=$OutputDirDefault}" ]
 then
   mkdir "${OutputDir}"
+fi
+if [ ! -d "${OutputDir:=$OutputDirDefault}"/plots_stats ]
+then
   mkdir "${OutputDir}"/plots_stats
-  mkdir "${OutputDir}"/missingness_hwe_steps
+fi
+if [ ! -d "${OutputDir}"/missingness_hwe_steps ]
+then
+ mkdir "${OutputDir}"/missingness_hwe_steps
 fi
 
 #0 Optional prefiltering step for sample selection and for autosomal filtering
 case "${Autosome:=$AutosomeDefault}:${Prefilter:=$PrefilterDefault}" in
-	True:keep)
-		"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --keep "${KeepList}" --autosome --make-bed --out "${OutputDir}"/missingness_hwe_steps/00autosome_k
+        True:keep)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --keep "${KeepList}" --autosome --make-bed --out "${OutputDir}"/missingness_hwe_steps/00autosome_k
 		BedFile="${OutputDir}"/missingness_hwe_steps/00autosome_k.bed
-		BimFile="${OutputDir}"/missingness_hwe_steps/00autosome_k.bim
-		FamFile="${OutputDir}"/missingness_hwe_steps/00autosome_k.fam
-		;;
-	True:remove)
-		"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --remove "${RemoveList}" --autosome --make-bed --out "${OutputDir}"/missingness_hwe_steps/00autosome_r
-		BedFile="${OutputDir}"/missingness_hwe_steps/00autosome_r.bed
-		BimFile="${OutputDir}"/missingness_hwe_steps/00autosome_r.bim
-		FamFile="${OutputDir}"/missingness_hwe_steps/00autosome_r.fam
-		;;
-	True:none)
-		"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --autosome --make-bed --out "${OutputDir}"/missingness_hwe_steps/00autosome
-		BedFile="${OutputDir}"/missingness_hwe_steps/00autosome.bed
-		BimFile="${OutputDir}"/missingness_hwe_steps/00autosome.bim
-		FamFile="${OutputDir}"/missingness_hwe_steps/00autosome.fam
-		;;
-	False:keep)
-		"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --keep "${KeepList}" --make-bed --out "${OutputDir}"/missingness_hwe_steps/00filt_k
-		BedFile="${OutputDir}"/missingness_hwe_steps/00filt_k.bed
-		BimFile="${OutputDir}"/missingness_hwe_steps/00filt_k.bim
-		FamFile="${OutputDir}"/missingness_hwe_steps/00filt_k.fam
-		;;
-	False:remove)
-		"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --remove "${RemoveList}" --make-bed --out "${OutputDir}"/missingness_hwe_steps/00filt_r
-		BedFile="${OutputDir}"/missingness_hwe_steps/00filt_r.bed
-		BimFile="${OutputDir}"/missingness_hwe_steps/00filt_r.bim
-		FamFile="${OutputDir}"/missingness_hwe_steps/00filt_r.fam
-		;;
+                BimFile="${OutputDir}"/missingness_hwe_steps/00autosome_k.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00autosome_k.fam
+                ;;
+        True:remove)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --remove "${RemoveList}" --autosome --make-bed --out "${OutputDir}"/missingness_hwe_steps/00autosome_r
+                BedFile="${OutputDir}"/missingness_hwe_steps/00autosome_r.bed
+                BimFile="${OutputDir}"/missingness_hwe_steps/00autosome_r.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00autosome_r.fam
+                ;;
+        True:none)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --autosome --make-bed --out "${OutputDir}"/missingness_hwe_steps/00autosome
+                BedFile="${OutputDir}"/missingness_hwe_steps/00autosome.bed
+                BimFile="${OutputDir}"/missingness_hwe_steps/00autosome.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00autosome.fam
+                ;;
+        False:keep)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --keep "${KeepList}" --make-bed --out "${OutputDir}"/missingness_hwe_steps/00filt_k
+                BedFile="${OutputDir}"/missingness_hwe_steps/00filt_k.bed
+                BimFile="${OutputDir}"/missingness_hwe_steps/00filt_k.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00filt_k.fam
+                ;;
+        False:remove)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --remove "${RemoveList}" --make-bed --out "${OutputDir}"/missingness_hwe_steps/00filt_r
+                BedFile="${OutputDir}"/missingness_hwe_steps/00filt_r.bed
+                BimFile="${OutputDir}"/missingness_hwe_steps/00filt_r.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00filt_r.fam
+                ;;
 esac
 
 #1 for determining genotyping threshold
