@@ -10,7 +10,7 @@ AutosomeDefault=False
 BfileDefault=/home/wheelerlab1/Data/dbGaP_Prostate_prj_13579/GENEVA_MEC_ProstateCancer_JL_TOP_c1_subject_level
 GenotypingThresholdDefault=0.01
 HWEpvalDefault=0.0001
-OutputDirDefault=~/QC_Redo
+OutputDirDefault=~/QC_Redo/"Specify Directory based on Cohorts"
 PrefilterDefault=none
 
 while :
