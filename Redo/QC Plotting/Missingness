@@ -1,5 +1,7 @@
 11.5.18
 
+This was done on both Latino and Japanese cohorts, but this example shows only Japanese.
+
 R:
 
 > library(dplyr)
