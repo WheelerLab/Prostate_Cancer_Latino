@@ -151,6 +151,6 @@ Options in effect:
 #Pipeline for QC found in Ryan's Github: https://github.com/WheelerLab/gwasqc_pipeline/blob/master/shellscripts/01MissingnessFiltering
 #Changing parameters of script and copying to another Github Repo: /WheelerLab/Prostate_Cancer_Latino/Redo/QC-Pipeline
 
-Running QC Pipeline:
+Running QC Pipeline in "QC-Pipeline" repo
   
 
