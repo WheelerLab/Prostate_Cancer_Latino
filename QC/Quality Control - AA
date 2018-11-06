@@ -51,7 +51,7 @@ report written to /home/jack/px_prostate_cancer_AA/QC.lmiss.
 #1,199,187 variants and 4,874 people pass filters and QC.
 
 #QCStep2
-plink --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all --geno 0.1 --make-bed --out /home/jack/px_prostate_cancer_AA/QC2
+plink --bfile /home/jack/px_prostate_cancer_AA/GENEVA_MEC_ProstateCancer_AA_all --geno 0.01 --make-bed --out /home/jack/px_prostate_cancer_AA/QC2
 
 PLINK v1.90b4.3 64-bit (9 May 2017)            www.cog-genomics.org/plink/1.9/
 (C) 2005-2017 Shaun Purcell, Christopher Chang   GNU General Public License v3
