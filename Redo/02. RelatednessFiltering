@@ -1,1 +1,324 @@
+#!/bin/bash
 
+PlinkPath=/usr/local/bin
+
+BfileDefault=/home/jack/QC_Redo/Missingness-Output-JA/missingness_hwe_steps/05filtered_HWE
+PrefilterDefault=none
+OutputDirDefault=/home/jack/QC_Redo/Relatedness-Output-JA
+RelatednessDefault=0.95
+RunIBD=true
+while :
+do
+    case "$1" in
+      -b | --bfile) #same as normal plink - Path to all files and the shared prefix
+                BFile="$2"
+                shift 2
+                ;;
+      --bim) #/path/to/file.bim
+                BimFile="$2"
+                shift 2
+                ;;
+      --bed) #/path/to/file.bed
+                BedFile="$2"
+                shift 2
+                ;;
+      --fam) #/path/to/file.fam
+                FamFile="$2"
+                shift 2
+                ;;
+      -k | --keep) #list of individuals you would like to keep. mutually exclusive with remove
+                KeepList="$2"
+                Prefilter=keep
+                shift 2
+                ;;
+      -o | --output) #directory where you'd like to send all your QC folders - will be folder hierarchy
+                OutputDir="$2"
+                shift 2
+                ;;
+      --offplotibd) #/path/to/file.fam
+                RunIBD=False
+                shift 1
+                ;;
+      --relatedness | --rel) #Relatedness threshold you'd like to filter by
+                Relatedness="$2"
+                shift 2
+                ;;
+      --remove | -r) #list of individuals you would like to remove
+                RemoveList="$2"
+                Prefilter=remove
+                shift 2
+                ;;
+      -*) #unknown
+          echo "Error: Unknown option: $1" >&2
+                exit 1
+                ;;
+      *)  # No more options
+          shift
+                break
+                ;;
+     esac
+done
+
+echo "Using bim file ${BimFile:=${BFile:=$BfileDefault}.bim}"
+echo "Using bed file ${BedFile:=${BFile:=$BfileDefault}.bed}"
+echo "Using fam file ${FamFile:=${BFile:=$BfileDefault}.fam}"
+echo "Using Output Directory ${OutputDir:=$OutputDirDefault}"
+
+if [ ! -e "${BimFile}" ] || [ ! -e "${FamFile}" ] || [ ! -e "${BedFile}" ]
+then
+  echo "Warning: One or more bfiles does not exist. Exiting."
+  exit 1
+fi
+
+if [ ! -d "${OutputDir}" ]
+then
+  mkdir "${OutputDir}"
+  mkdir "${OutputDir}"/relatedness_steps
+  mkdir "${OutputDir}"/plots_stats
+fi
+if [ ! -d "${OutputDir}"/relatedness_steps ]
+then
+  mkdir "${OutputDir}"/relatedness_steps
+fi
+if [ ! -d "${OutputDir}"/plots_stats ]
+then
+  mkdir "${OutputDir}"/plots_stats
+fi
+
+#0 optional remove/keep samples - good for split populations
+case "${Prefilter:=$PrefilterDefault}" in
+        keep)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --keep "${KeepList}" --make-bed --out "${OutputDir}"/missingne$
+                BedFile="${OutputDir}"/missingness_hwe_steps/00keep_samples.bed
+                BimFile="${OutputDir}"/missingness_hwe_steps/00keep_samples.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00keep_samples.fam
+                ;;
+        remove)
+                "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --remove "${RemoveList}" --make-bed --out "${OutputDir}"/missi$
+                BedFile="${OutputDir}"/missingness_hwe_steps/00remove_samples.bed
+                BimFile="${OutputDir}"/missingness_hwe_steps/00remove_samples.bim
+                FamFile="${OutputDir}"/missingness_hwe_steps/00remove_samples.fam
+                ;;
+esac
+
+#5a Creates a pruned list of SNP IDs for plotting on a principal components analysis
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --indep-pairwise 50 5 0.3 --out "${OutputDir}"/relatedness_steps/01LD_prune_li$
+#5b create genome file for ibd chart
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --extract "${OutputDir}"/relatedness_steps/01LD_prune_list.prune.in --genome -$
+#generate list of samples to remove based on relatedness
+
+if [ "${RunIBD}" == "true" ]
+then
+        Rscript /home/jack/QC_Redo/Rscripts/ibd.R -o "${OutputDir}"/plots_stats --genome "${OutputDir}"/relatedness_steps/02relatedness.genome
+fi
+#5c heterozygosity check for unfiltered samples
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --het --out "${OutputDir}"/relatedness_steps/03het_unfiltered
+
+#5d LD prune snps from bfiles
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --extract "${OutputDir}"/relatedness_steps/01LD_prune_list.prune.in  --make-be$
+Rscript /home/jack/QC_Redo/Rscripts/heterozygosity.R -o "${OutputDir}"/plots_stats --het "${OutputDir}"/relatedness_steps/03het_unfiltered.het --tag with_re$
+
+if [ $(bc <<< "${Relatedness:=$RelatednessDefault}<1") -eq 1 ]
+then
+        "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --rel-cutoff "${Relatedness:=$RelatednessDefault}" --make-bed --out "$$
+        #5e regenerate heterozygosity estimates from filtered for validation
+        "${PlinkPath}"/plink --bfile "${OutputDir}"/relatedness_steps/04without_relateds --het --out "${OutputDir}"/relatedness_steps/06het_without_relateds
+login as: jack
+jack@10.23.17.131's password:
+Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-78-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+355 packages can be updated.
+223 updates are security updates.
+
+New release '18.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+Last login: Tue Nov 13 13:53:17 2018 from 147.126.26.58
+jack@wheelerlab1:~$ cd QC_Redo/
+jack@wheelerlab1:~/QC_Redo$ cd MergeHAPMAP-Output-JA
+jack@wheelerlab1:~/QC_Redo/MergeHAPMAP-Output-JA$ ls
+hapmap  PCA
+jack@wheelerlab1:~/QC_Redo/MergeHAPMAP-Output-JA$ cd hapmap/
+jack@wheelerlab1:~/QC_Redo/MergeHAPMAP-Output-JA/hapmap$ ls
+01primarymerge.log           04Without_missing_geno0.01_noX.bed
+01primarymerge-merge.fam     04Without_missing_geno0.01_noX.bim
+01primarymerge-merge.missnp  04Without_missing_geno0.01_noX.fam
+02hapmap_withoutmissing.bed  04Without_missing_geno0.01_noX.log
+02hapmap_withoutmissing.bim  05LD_prune_list.log
+02hapmap_withoutmissing.fam  05LD_prune_list.prune.in
+02hapmap_withoutmissing.log  05LD_prune_list.prune.out
+03Withoutmissing.bed         07final_LDpruned.bed
+03Withoutmissing.bim         07final_LDpruned.bim
+03Withoutmissing.fam         07final_LDpruned.fam
+03Withoutmissing.hh          07final_LDpruned.log
+03Withoutmissing.log
+jack@wheelerlab1:~/QC_Redo/MergeHAPMAP-Output-JA/hapmap$ cd
+jack@wheelerlab1:~$ cd /media/wheelerlab1/MyBook/jack_2018-09-21/
+jack@wheelerlab1:/media/wheelerlab1/MyBook/jack_2018-09-21$ cd px_prostate_cance                                                                             r_LA/
+jack@wheelerlab1:/media/wheelerlab1/MyBook/jack_2018-09-21/px_prostate_cancer_LA                                                                             $ ls
+6e1.log                       hg19-updated-chr7.vcf.gz
+6e1.vcf                       hg19-updated-chr8.bed
+6e1.vcf.gz                    hg19-updated-chr8.bim
+Chromosome-hg19-1000G.txt     hg19-updated-chr8.fam
+Exclude-hg19-1000G.txt        hg19-updated-chr8.log
+Force-Allele1-hg19-1000G.txt  hg19-updated-chr8.vcf
+FreqPlot-hg19-1000G.txt       hg19-updated-chr8.vcf.gz
+GWAS_Run_2                    hg19-updated-chr9.bed
+hg19.bed                      hg19-updated-chr9.bim
+hg19.bim                      hg19-updated-chr9.fam
+hg19.fam                      hg19-updated-chr9.log
+hg19.log                      hg19-updated-chr9.vcf
+hg19-updated.bed              hg19-updated-chr9.vcf.gz
+hg19-updated.bim              hg19-updated.fam
+hg19-updated-chr10.bed        hg19-updated.log
+hg19-updated-chr10.bim        HRC-1000G-check-bim.pl
+hg19-updated-chr10.fam        ID-hg19-1000G.txt
+hg19-updated-chr10.log        LA_list.bed
+hg19-updated-chr10.vcf        LA_list.bim
+hg19-updated-chr10.vcf.gz     LA_list.fam
+hg19-updated-chr11.bed        LA_list.hh
+hg19-updated-chr11.bim        LA_list.log
+hg19-updated-chr11.fam        LA_list.map
+hg19-updated-chr11.log        LA_list.ped
+hg19-updated-chr11.vcf        latino.list.txt
+hg19-updated-chr11.vcf.gz     LA.txt
+hg19-updated-chr12.bed        LiftMap.py
+hg19-updated-chr12.bim        LOG-hg19-1000G.txt
+hg19-updated-chr12.fam        L.txt
+hg19-updated-chr12.log        new.bed
+hg19-updated-chr12.vcf        new.bed.unlifted
+hg19-updated-chr12.vcf.gz     newfile
+hg19-updated-chr13.bed        newfile.hh
+hg19-updated-chr13.bim        newfile.log
+hg19-updated-chr13.fam        newfile.map
+hg19-updated-chr13.log        newfile.map.bed
+hg19-updated-chr13.vcf        newfile.ped
+hg19-updated-chr13.vcf.gz     newfreq.frq
+hg19-updated-chr14.bed        newfreq.log
+hg19-updated-chr14.bim        new.map
+hg19-updated-chr14.fam        new.ped
+hg19-updated-chr14.log        old.log
+hg19-updated-chr14.vcf        PCA-files
+hg19-updated-chr14.vcf.gz     PCA-QC_files
+hg19-updated-chr15.bed        plink.log
+hg19-updated-chr15.bim        Position-hg19-1000G.txt
+hg19-updated-chr15.fam        QC2.bed
+hg19-updated-chr15.log        QC2.bim
+hg19-updated-chr15.vcf        QC2.fam
+hg19-updated-chr15.vcf.gz     QC2.hh
+hg19-updated-chr16.bed        QC2.log
+hg19-updated-chr16.bim        QC3.hh
+hg19-updated-chr16.fam        QC3.imiss
+hg19-updated-chr16.log        QC3.lmiss
+hg19-updated-chr16.vcf        QC3.log
+hg19-updated-chr16.vcf.gz     QC4.hh
+hg19-updated-chr17.bed        QC4.hwe
+hg19-updated-chr17.bim        QC4.log
+hg19-updated-chr17.fam        QC5a.hh
+hg19-updated-chr17.log        QC5a.log
+hg19-updated-chr17.vcf        QC5a.prune.in
+hg19-updated-chr17.vcf.gz     QC5a.prune.out
+hg19-updated-chr18.bed        QC5b1.bed
+hg19-updated-chr18.bim        QC5b1.bim
+hg19-updated-chr18.fam        QC5b1.fam
+hg19-updated-chr18.log        QC5b1.hh
+hg19-updated-chr18.vcf        QC5b1.log
+hg19-updated-chr18.vcf.gz     QC5b1.rel.id
+hg19-updated-chr19.bed        QC5b2.genome
+hg19-updated-chr19.bim        QC5b2.hh
+hg19-updated-chr19.fam        QC5b2.log
+hg19-updated-chr19.log        QC5b3.hh
+hg19-updated-chr19.vcf        QC5b3.imiss
+hg19-updated-chr19.vcf.gz     QC5b3.lmiss
+hg19-updated-chr1.bed         QC5b3.log
+hg19-updated-chr1.bim         QC5b.genome
+hg19-updated-chr1.fam         QC5b.hh
+hg19-updated-chr1.log         QC5b.log
+hg19-updated-chr1.vcf         QC5c.het
+hg19-updated-chr1.vcf.gz      QC5c.hh
+hg19-updated-chr20.bed        QC5c.log
+hg19-updated-chr20.bim        QC5e.QC.log
+hg19-updated-chr20.fam        QC5.txt
+hg19-updated-chr20.log        QC6a.log
+hg19-updated-chr20.vcf        QC6a-merge.fam
+hg19-updated-chr20.vcf.gz     QC6a-merge.missnp
+hg19-updated-chr21.bed        QC6b.bed
+hg19-updated-chr21.bim        QC6b.bim
+hg19-updated-chr21.fam        QC6b.fam
+hg19-updated-chr21.log        QC6b.log
+hg19-updated-chr21.vcf        QC6c.bed
+hg19-updated-chr21.vcf.gz     QC6c.bim
+hg19-updated-chr22.bed        QC6c.fam
+hg19-updated-chr22.bim        QC6c.log
+hg19-updated-chr22.fam        QC6d1.bed
+hg19-updated-chr22.log        QC6d1.bim
+hg19-updated-chr22.vcf        QC6d1.fam
+hg19-updated-chr22.vcf.gz     QC6d1.log
+hg19-updated-chr23.log        QC6e1.eval
+hg19-updated-chr2.bed         QC6e1.evec
+hg19-updated-chr2.bim         QC6e1.fam
+hg19-updated-chr2.fam         QC6e1.log
+hg19-updated-chr2.log         QC6e1.map
+hg19-updated-chr2.vcf         QC6e1.outlier
+hg19-updated-chr2.vcf.gz      QC6e1.ped
+hg19-updated-chr3.bed         QC6e1.prune.in
+hg19-updated-chr3.bim         QC6e1.prune.out
+hg19-updated-chr3.fam         QC6f1.par
+hg19-updated-chr3.log         QC.hh
+hg19-updated-chr3.vcf         QC.imiss
+hg19-updated-chr3.vcf.gz      QC.lmiss
+hg19-updated-chr4.bed         QC.log
+hg19-updated-chr4.bim         QC_Plot_LA
+hg19-updated-chr4.fam         qqman.r
+hg19-updated-chr4.log         Run-plink.sh
+hg19-updated-chr4.vcf         Strand-Flip-hg19-1000G.txt
+hg19-updated-chr4.vcf.gz      TEMP1.bed
+hg19-updated-chr5.bed         TEMP1.bim
+hg19-updated-chr5.bim         TEMP1.fam
+hg19-updated-chr5.fam         TEMP1.log
+hg19-updated-chr5.log         TEMP2.bed
+hg19-updated-chr5.vcf         TEMP2.bim
+hg19-updated-chr5.vcf.gz      TEMP2.fam
+hg19-updated-chr6.bed         TEMP2.log
+hg19-updated-chr6.bim         TEMP3.bed
+hg19-updated-chr6.fam         TEMP3.bim
+hg19-updated-chr6.log         TEMP3.fam
+hg19-updated-chr6.vcf         TEMP3.log
+hg19-updated-chr6.vcf.gz      TEMP4.bed
+hg19-updated-chr7.bed         TEMP4.bim
+hg19-updated-chr7.bim         TEMP4.fam
+hg19-updated-chr7.fam         TEMP4.log
+hg19-updated-chr7.log         T$.log
+hg19-updated-chr7.vcf
+jack@wheelerlab1:/media/wheelerlab1/MyBook/jack_2018-09-21/px_prostate_cancer_LA                                                                             $ cd
+jack@wheelerlab1:~$ cd QC_Redo
+jack@wheelerlab1:~/QC_Redo$ nano RelatednessFiltering-JA
+jack@wheelerlab1:~/QC_Redo$ nano RelatednessFiltering-JA
+  GNU nano 2.5.3                                   File: RelatednessFiltering-JA                                                                   Modified
+
+#5b create genome file for ibd chart
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --extract "${OutputDir}"/relatedness_steps/01LD_prune_list.prune.in --genome -$
+#generate list of samples to remove based on relatedness
+
+if [ "${RunIBD}" == "true" ]
+then
+        Rscript /home/jack/QC_Redo/Rscripts/ibd.R -o "${OutputDir}"/plots_stats --genome "${OutputDir}"/relatedness_steps/02relatedness.genome
+fi
+#5c heterozygosity check for unfiltered samples
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --het --out "${OutputDir}"/relatedness_steps/03het_unfiltered
+
+#5d LD prune snps from bfiles
+"${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --extract "${OutputDir}"/relatedness_steps/01LD_prune_list.prune.in  --make-be$
+Rscript /home/jack/QC_Redo/Rscripts/heterozygosity.R -o "${OutputDir}"/plots_stats --het "${OutputDir}"/relatedness_steps/03het_unfiltered.het --tag with_re$
+
+if [ $(bc <<< "${Relatedness:=$RelatednessDefault}<1") -eq 1 ]
+then
+        "${PlinkPath}"/plink --bed "${BedFile}" --bim "${BimFile}" --fam "${FamFile}" --rel-cutoff "${Relatedness:=$RelatednessDefault}" --make-bed --out "$$
+        #5e regenerate heterozygosity estimates from filtered for validation
+        "${PlinkPath}"/plink --bfile "${OutputDir}"/relatedness_steps/04without_relateds --het --out "${OutputDir}"/relatedness_steps/06het_without_relateds
+        Rscript /home/jack/QC_Redo/Rscripts/heterozygosity.R -o "${OutputDir}"/plots_stats --het "${OutputDir}"/relatedness_steps/06het_without_relateds.het$
+fi
